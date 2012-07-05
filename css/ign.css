@@ -5,12 +5,11 @@
 .reveal .progress span {
   background: #d3222a;
 }
-
 .reveal .logo {
   margin: 0;
   background: rgba(255,255,255,0.0);
   border: 0px;
-  
+
   -webkit-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
      -moz-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
           box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
@@ -22,4 +21,10 @@
   background: hsla(185, 25%, 20%, 0.0);
   color: #d3222a;
   text-decoration: underline;
+}
+.reveal .controls a:hover {
+  text-decoration: none;
+}
+.reveal section img {
+  border: 0px;
 }
