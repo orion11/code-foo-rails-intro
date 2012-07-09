@@ -1,39 +1,250 @@
-<!doctype html>  
+<!doctype html>
 <html lang="en">
-	
+
 	<head>
 		<meta charset="utf-8">
-		
-		<title>Code Foo :: Debugging Javascript</title>
 
-		<meta name="description" content="A presentation for IGN's Code Foo program on debugging Javascript">
+		<title>Code Foo :: Intro to Ruby on Rails</title>
+
+		<meta name="description" content="A presentation for IGN's Code Foo program on Ruby on Rails">
 		<meta name="author" content="Ryan Sullivan">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		
+
 		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-		
+
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/ign.css">
 		<link rel="stylesheet" href="css/print.css" type="text/css" media="print">
 
-		<link rel="stylesheet" href="lib/zenburn.css">
+		<link rel="stylesheet" href="lib/solarized_light.css">
 	</head>
-	
+
 	<body>
-		
+
 		<div class="reveal">
 
 			<!-- Used to fade in a background when a specific slide state is reached -->
 			<div class="state-background"></div>
-			
+
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
 					<h4 class="red"><img class="logo" src="assets/images/logo.png" /> Code Foo</h4>
 					<h1>Introduction to Ruby on Rails</h1>
+				</section>
+
+				<section>
+					<section>
+						<h1>Gems</h1>
+						<h3>The ruby packages</h3>
+					</section>
+					<section>
+						<h2><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></h2>
+						<img src="assets/images/rubygems.png">
+					</section>
+					<section>
+						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
+						<h3>Ruby Version Manager</h3>
+						<pre>
+							<code class="no-highlight">
+$ rvm use --install 1.9.3
+$<span class="fragment"> rvm current</span>
+<span class="fragment">ruby-1.9.3-p194
+$</span><span class="fragment"> rvm gemdir</span>
+<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194</span>
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>RVM: Gemsets</h2>
+						<pre>
+							<code class="no-highlight">
+$ rvm use --install --create 1.9.3@code-foo
+$<span class="fragment"> rvm current</span>
+<span class="fragment">ruby-1.9.3-p194@code-foo
+$</span><span class="fragment"> rvm gemdir</span>
+<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</span>
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Bundler</h2>
+						<h3>Gem dependency manager</h3>
+						Gemfile:
+						<pre>
+							<code>
+source 'https://rubygems.org'
+
+gem 'faraday', '~> 0.8.0'
+gem 'rails', '~> 3.2.3'
+
+# Gems used only for assets, not required in production
+group :assets do
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'jquery-rails', '~> 2.0.1'
+  gem 'sass-rails',   '~> 3.2.3'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', '~> 0.10.0'
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+group :test, :development do
+  gem 'debugger'
+  gem 'rspec-rails', '~> 2.10.0'
+  gem 'webmock', '~> 1.8.5', :require => false
+end
+							</code>
+						</pre>
+						Warning: be careful when running 'bundle update'
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>TDD</h1>
+						<h3>
+							<span class="red fragment">Red</span>
+							<span class="fragment" style="color: green;">Green</span>
+							<span class="fragment">Refactor</span>
+						</h3>
+					</section>
+					<section>
+						<h2>RSpec</h2>
+						<pre>
+							<code>
+describe '#foo'
+  hello.should eq('bar')
+end
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code>
+def foo
+  'bar'
+end
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<img src="assets/images/rails.png">
+					</section>
+					<section>
+						<h2>MVC</h2>
+						<ul>
+							<li>Model</li>
+							<li>View</li>
+							<li>Controller</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Creating a New Rails Project</h2>
+						<ol>
+							<li>
+								Install Rails<br>
+								<pre><code>$ gem install rails</code></pre>
+							</li>
+							<li class="fragment">
+								Create a Project<br>
+								<pre><code>$ rails new code-foo</code></pre>
+							</li>
+						</ol>
+					</section>
+					<section>
+						<h2>Structure of a Rails Project</h2>
+						<ul>
+							<li>app/ - your application code</li>
+							<li>config/</li>
+							<li>config.ru</li>
+							<li>db/ - your database schema and database migrations</li>
+							<li>doc/</li>
+							<li>Gemfile, Gemfile.lock - your bundler configs</li>
+							<li>lib/ - extended modules for your application</li>
+							<li>log/</li>
+							<li>public/ - served "as is", contains static files, and compiled assets</li>
+							<li>Rakefile - contains and loads rake tasks, should add new tasks in lib/tasks</li>
+							<li>README.rdoc</li>
+							<li>script/ - contains various scripts related to your application</li>
+							<li>test/ - default test directory, use spec/ if using RSpec</li>
+							<li>tmp/</li>
+							<li>vendor/ - a place for all third-party code, mostly handled through gems now</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Starting your Application Server</h2>
+						<pre><code>$ rails server</code></pre>
+						You can now view your application by going to localhost:3000 in a browser
+					</section>
+
+					<section>
+						<h2>Generating a Resource</h2>
+						<pre><code>$ rails generate resource foo</code></pre>
+						<ul class="fragment">
+							<li>create_foo database migration</li>
+							<li>foo model and associated test files</li>
+							<li>foos controller and associated test files</li>
+							<li>foos views directory, but no view files</li>
+							<li>foos helper and associate test files</li>
+							<li>foos assets (JS and CSS)</li>
+							<li>adds 'resources :foos' to your config/routes.rb</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Models</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Controllers</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Views</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Helpers</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Static Assets</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Routes</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Rails at IGN</h1>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Resources</h1>
+					</section>
 				</section>
 			</div>
 
@@ -47,15 +258,15 @@
 
 			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
 			<div class="progress"><span></span></div>
-			
+
 		</div>
 
 		<!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
 		<script src="lib/highlight.js"></script>
 		<script src="lib/classList.js"></script>
-		
+
 		<script src="js/reveal.js"></script>
-		
+
 		<script>
 			// Parse the query string into a key/value object
 			var query = {};

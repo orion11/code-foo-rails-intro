@@ -7,12 +7,6 @@
 }
 .reveal .logo {
   margin: 0;
-  background: rgba(255,255,255,0.0);
-  border: 0px;
-
-  -webkit-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
-     -moz-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
-          box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
 }
 .reveal a:not(.image) {
   color: #d3222a;
@@ -26,5 +20,10 @@
   text-decoration: none;
 }
 .reveal section img {
+  background: none;
   border: 0px;
+
+  -webkit-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);
 }
