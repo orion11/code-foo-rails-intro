@@ -71,6 +71,9 @@ $</span><span class="fragment"> rvm gemdir</span>
 						</pre>
 					</section>
 					<section>
+						<h2>.rvmrc</h2>
+					</section>
+					<section>
 						<h2>Bundler</h2>
 						<h3>Gem dependency manager</h3>
 						Gemfile:
@@ -159,23 +162,25 @@ end
 					</section>
 					<section>
 						<h2>Structure of a Rails Project</h2>
-						<ul>
-							<li>app/ - your application code</li>
-							<li>config/</li>
-							<li>config.ru</li>
-							<li>db/ - your database schema and database migrations</li>
-							<li>doc/</li>
-							<li>Gemfile, Gemfile.lock - your bundler configs</li>
-							<li>lib/ - extended modules for your application</li>
-							<li>log/</li>
-							<li>public/ - served "as is", contains static files, and compiled assets</li>
-							<li>Rakefile - contains and loads rake tasks, should add new tasks in lib/tasks</li>
-							<li>README.rdoc</li>
-							<li>script/ - contains various scripts related to your application</li>
-							<li>test/ - default test directory, use spec/ if using RSpec</li>
-							<li>tmp/</li>
-							<li>vendor/ - a place for all third-party code, mostly handled through gems now</li>
-						</ul>
+						<small>
+							<ul>
+								<li>app/ - your application code</li>
+								<li>config/</li>
+								<li>config.ru</li>
+								<li>db/ - your database schema and database migrations</li>
+								<li>doc/</li>
+								<li>Gemfile, Gemfile.lock - your bundler configs</li>
+								<li>lib/ - extended modules for your application</li>
+								<li>log/</li>
+								<li>public/ - served "as is", contains static files, and compiled assets</li>
+								<li>Rakefile - contains and loads rake tasks, should add new tasks in lib/tasks</li>
+								<li>README.rdoc</li>
+								<li>script/ - contains various scripts related to your application</li>
+								<li>test/ - default test directory, use spec/ if using RSpec</li>
+								<li>tmp/</li>
+								<li>vendor/ - a place for all third-party code, mostly handled through gems now</li>
+							</ul>
+						</small>
 					</section>
 
 					<section>
@@ -202,48 +207,119 @@ end
 				<section>
 					<section>
 						<h1>Models</h1>
+						Model your data
 					</section>
-				</section>
-
-				<section>
 					<section>
-						<h1>Controllers</h1>
+						<h2>Validation</h2>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>Views</h1>
+						The HTML, JSON, or XML representation of your data
+					</section>
+					<section>
+						<h2>Ruby in Your HTML</h2>
+					</section>
+					<section>
+						<h2>Layouts</h2>
+					</section>
+					<section>
+						<h2>Partials</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Controllers</h1>
+							Receives and responds to HTTP requests
+					</section>
+					<section>
+						<h2>Application Controller</h2>
+					</section>
+					<section>
+						<h2>Before Filters</h2>
+					</section>
+					<section>
+						<h2>Instance Variables</h2>
+					</section>
+					<section>
+						<h2>Rendering A Response</h2>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>Helpers</h1>
+						Reusable view logic
+					</section>
+					<section>
+						<h2>Built in Helpers</h2>
+					</section>
+					<section>
+						<h2>Application Helper</h2>
+					</section>
+					<section>
+						<h2>Custom Helpers</h2>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h1>Static Assets</h1>
+						<h1>Assets</h1>
+						JavaScript, CSS, and Images
+					</section>
+					<section>
+						<h2>Sprockets and the Asset Pipeline</h2>
+					</section>
+					<section>
+						<h3>Requiring Files</h3>
+					</section>
+					<section>
+						<h3>Compiling JavaScript and CSS</h3>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>Routes</h1>
+						URLs
+					</section>
+					<section>
+						<h2>Resources</h2>
+					</section>
+					<section>
+						<h3>Nested Resources</h3>
+					</section>
+					<section>
+						<h2>Custom Paths</h2>
+					</section>
+					<section>
+						<h2>rake routes</h2>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>Rails at IGN</h1>
+						Rails in a Service Oriented World
+					</section>
+					<section>
+						<h2>No ActiveRecord</h2>
+					</section>
+					<section>
+						<h2>Faraday</h2>
+					</section>
+					<section>
+						<h2>WebMock</h2>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>Resources</h1>
+						<a href="http://guides.rubyonrails.org/index.html">RailsGuides</a>
 					</section>
 				</section>
 			</div>
