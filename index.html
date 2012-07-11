@@ -49,25 +49,21 @@
 						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
 						<h3>Ruby Version Manager</h3>
 						<pre>
-							<code class="no-highlight">
-$ rvm use --install 1.9.3
+							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
 $<span class="fragment"> rvm current</span>
 <span class="fragment">ruby-1.9.3-p194
 $</span><span class="fragment"> rvm gemdir</span>
-<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194</span>
-							</code>
+<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194</span></code>
 						</pre>
 					</section>
 					<section>
 						<h2>RVM: Gemsets</h2>
 						<pre>
-							<code class="no-highlight">
-$ rvm use --install --create 1.9.3@code-foo
+							<code class="no-highlight" contenteditable>$ rvm use --install --create 1.9.3@code-foo
 $<span class="fragment"> rvm current</span>
 <span class="fragment">ruby-1.9.3-p194@code-foo
 $</span><span class="fragment"> rvm gemdir</span>
-<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</span>
-							</code>
+<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</span></code>
 						</pre>
 					</section>
 					<section>
@@ -78,8 +74,7 @@ $</span><span class="fragment"> rvm gemdir</span>
 						<h3>Gem dependency manager</h3>
 						Gemfile:
 						<pre>
-							<code>
-source 'https://rubygems.org'
+							<code contenteditable>source 'https://rubygems.org'
 
 gem 'faraday', '~> 0.8.0'
 gem 'rails', '~> 3.2.3'
@@ -100,8 +95,7 @@ group :test, :development do
   gem 'debugger'
   gem 'rspec-rails', '~> 2.10.0'
   gem 'webmock', '~> 1.8.5', :require => false
-end
-							</code>
+end</code>
 						</pre>
 						Warning: be careful when running 'bundle update'
 					</section>
@@ -119,18 +113,16 @@ end
 					<section>
 						<h2>RSpec</h2>
 						<pre>
-							<code>
-describe '#foo'
-  hello.should eq('bar')
-end
-							</code>
+							<code contenteditable>describe '#foo'
+  it 'returns bar' end
+    hello.should eq('bar')
+  end
+end</code>
 						</pre>
 						<pre class="fragment">
-							<code>
-def foo
+							<code contenteditable>def foo
   'bar'
-end
-							</code>
+end</code>
 						</pre>
 					</section>
 				</section>
@@ -140,23 +132,19 @@ end
 						<img src="assets/images/rails.png">
 					</section>
 					<section>
-						<h2>MVC</h2>
-						<ul>
-							<li>Model</li>
-							<li>View</li>
-							<li>Controller</li>
-						</ul>
+						<h2>MVC Framework</h2>
+						Model | View | Controller
 					</section>
 					<section>
 						<h2>Creating a New Rails Project</h2>
 						<ol>
 							<li>
 								Install Rails<br>
-								<pre><code>$ gem install rails</code></pre>
+								<pre><code contenteditable>$ gem install rails</code></pre>
 							</li>
 							<li class="fragment">
 								Create a Project<br>
-								<pre><code>$ rails new code-foo</code></pre>
+								<pre><code contenteditable>$ rails new code-foo</code></pre>
 							</li>
 						</ol>
 					</section>
@@ -185,13 +173,13 @@ end
 
 					<section>
 						<h2>Starting your Application Server</h2>
-						<pre><code>$ rails server</code></pre>
+						<pre><code contenteditable>$ rails server</code></pre>
 						You can now view your application by going to localhost:3000 in a browser
 					</section>
 
 					<section>
 						<h2>Generating a Resource</h2>
-						<pre><code>$ rails generate resource foo</code></pre>
+						<pre><code contenteditable>$ rails generate resource foo</code></pre>
 						<ul class="fragment">
 							<li>create_foo database migration</li>
 							<li>foo model and associated test files</li>
@@ -216,22 +204,6 @@ end
 
 				<section>
 					<section>
-						<h1>Views</h1>
-						The HTML, JSON, or XML representation of your data
-					</section>
-					<section>
-						<h2>Ruby in Your HTML</h2>
-					</section>
-					<section>
-						<h2>Layouts</h2>
-					</section>
-					<section>
-						<h2>Partials</h2>
-					</section>
-				</section>
-
-				<section>
-					<section>
 						<h1>Controllers</h1>
 							Receives and responds to HTTP requests
 					</section>
@@ -246,6 +218,101 @@ end
 					</section>
 					<section>
 						<h2>Rendering A Response</h2>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Views</h1>
+						The HTML, JSON, or XML representation of your data
+					</section>
+					<section>
+						<h2>ERB: Ruby in Your HTML</h2>
+						<p>Controller:</p>
+						<pre><code contenteditable>def index
+  @articles = [ { name: 'foo' }, { name: 'bar' } ]
+end</code></pre>
+						<p>View:</p>
+						<pre><code contenteditable>&lt;ul&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</code></pre>
+						<div class="fragment">
+							<p>Result:</p>
+							<pre><code contenteditable>&lt;ul&gt;
+  &lt;li&gt;foo&lt;/li&gt;
+  &lt;li&gt;bar&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Layouts</h2>
+
+					</section>
+					<section>
+						<h2>Partials</h2>
+						<p>Break your view up into chunks</p>
+						<p>index.html.erb</p>
+						<pre><code contenteditable>&lt;ul&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;
+      &lt;%= article.name %&gt;&lt;br&gt;
+      &lt;%= article.description %&gt;
+    &lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</code></pre>
+						<p>show.html.erb</p>
+						<pre><code contenteditable>&lt;div&gt;
+  &lt;%= @article.name %&gt;&lt;br&gt;
+  &lt;%= @article.description %&gt;
+&lt;/div&gt; </code></pre>
+					</section>
+					<section>
+						<p>_article.html.erb</p>
+						<pre><code contenteditable>&lt;%= article.name %&gt;&lt;br&gt;
+&lt;%= article.description %&gt;</code></pre>
+						<div class="fragment">
+							<p>index.html.erb</p>
+							<pre><code contenteditable>&lt;ul&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;
+      &lt;%= render partial: 'article', object: article %&gt;
+    &lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</code></pre>
+							<p>show.html.erb</p>
+							<pre><code contenteditable>&lt;ul&gt;
+  &lt;%= render partial: 'article', object: @article %&gt;
+&lt;/ul&gt;</code></pre>
+						</div>
+						<div class="fragment">
+							<p>or</p>
+							<pre><code contenteditable>&lt;ul&gt;
+  &lt;%= render partial: 'article', locals: { article: @article } %&gt;
+&lt;/ul&gt;</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>HAML</h2>
+						<p>index.html.haml</p>
+						<pre><code contenteditable>%ul#article-list.articles
+  - @objects.each do |object|
+    %li.article= render partial: 'article', object: object
+
+.right.column
+  = @user.name</code></pre>
+						<div class="fragment">
+							<p>Result</p>
+							<pre><code contenteditable>&lt;ul id=&quot;article-list&quot; class=&quot;articles&quot;&gt;
+  &lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
+  &lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;right column&quot;&gt;
+  Ryan
+&lt;/div&gt;</code></pre>
+						</div>
 					</section>
 				</section>
 
