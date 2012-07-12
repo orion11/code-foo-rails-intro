@@ -617,16 +617,65 @@ end
 						URLs
 					</section>
 					<section>
-						<h2>Resources</h2>
-					</section>
-					<section>
-						<h2>Nested Resources</h2>
-					</section>
-					<section>
-						<h2>Custom Paths</h2>
+						<h2>One-off Routes</h2>
+						<pre><code>match "/articles/:id" => "articles#show"</code></pre>
+						<p>Routes to:</p>
+						<pre><code>GET /articles/17</code></pre>
 					</section>
 					<section>
 						<h2>rake routes</h2>
+						<pre><code class="no-highlight">$ rake routes
+            all_albums GET    /albums/all(.:format)                  albums#all
+  batch_destroy_albums DELETE /albums/batch_destroy(.:format)        albums#batch_destroy
+     batch_edit_albums GET    /albums/batch_edit(.:format)           albums#batch_edit
+   batch_update_albums POST   /albums/batch_update(.:format)         albums#batch_update
+         search_albums GET    /albums/search(.:format)               albums#search
+thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thumbnail_update
+                albums GET    /albums(.:format)                      albums#index
+                       POST   /albums(.:format)                      albums#create
+             new_album GET    /albums/new(.:format)                  albums#new
+            edit_album GET    /albums/:id/edit(.:format)             albums#edit
+                 album GET    /albums/:id(.:format)                  albums#show
+                       PUT    /albums/:id(.:format)                  albums#update
+                       DELETE /albums/:id(.:format)                  albums#destroy</code></pre>
+						<div class="fragment">
+							<p>Routing helpers</p>
+							<pre><code><%= link_to 'All Images', all_albums_path %></code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>RESTful Resources</h2>
+						<pre><code>resources :albums</code></pre>
+						<p>Creates the following routes:</p>
+						<pre><code class="no-highlight">                albums GET    /albums(.:format)                      albums#index
+                       POST   /albums(.:format)                      albums#create
+             new_album GET    /albums/new(.:format)                  albums#new
+            edit_album GET    /albums/:id/edit(.:format)             albums#edit
+                 album GET    /albums/:id(.:format)                  albums#show
+                       PUT    /albums/:id(.:format)                  albums#update
+                       DELETE /albums/:id(.:format)                  albums#destroy</code></pre>
+					</section>
+					<section>
+						<h2>Custom Resource Paths</h2>
+						<pre><code>resources :albums do
+  collection do
+    get 'all'
+    delete 'batch_destroy'
+    get 'batch_edit'
+    post 'batch_update'
+    get 'search'
+  end
+  member do
+    put 'thumbnail_update'
+  end
+end</code></pre>
+						<p>Adds the following routes:</p>
+						<pre><code class="no-highlight">            all_albums GET    /albums/all(.:format)                  albums#all
+  batch_destroy_albums DELETE /albums/batch_destroy(.:format)        albums#batch_destroy
+     batch_edit_albums GET    /albums/batch_edit(.:format)           albums#batch_edit
+   batch_update_albums POST   /albums/batch_update(.:format)         albums#batch_update
+         search_albums GET    /albums/search(.:format)               albums#search
+thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thumbnail_update</code></pre>
 					</section>
 				</section>
 
