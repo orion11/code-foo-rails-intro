@@ -80,13 +80,11 @@ gem 'rails', '~> 3.2.3'
 
 # Gems used only for assets, not required in production
 group :assets do
-	gem 'coffee-rails', '~> 3.2.1'
-	gem 'jquery-rails', '~> 2.0.1'
-	gem 'sass-rails',	 '~> 3.2.3'
+	gem 'jquery-rails', '2.0.1'
+	gem 'sass-rails', '=> 3.2.3'
 
 	# See https://github.com/sstephenson/execjs#readme for more supported runtimes
 	gem 'therubyracer', '~> 0.10.0'
-
 	gem 'uglifier', '>= 1.0.3'
 end
 
@@ -292,7 +290,7 @@ end</code></pre>
 		@articles = Article.all
 		respond_to do |format|
 			format.html # index.html.erb
-			format.xml	{ render :xml => @articles}
+			format.xml { render :xml => @articles}
 			format.json { render :json => @articles}
 		end
 	end
@@ -317,13 +315,14 @@ end</code></pre>
 		!!current_user
 	end
 end</code></pre>
-						<p class="fragment">Around Filters, After Filters</p>
-						<div class="fragment">
-							<p>Skipping Filters</p>
-								<pre><code class="ruby">class ArticlesController < ApplicationController
+					<p class="fragment">Around Filters, After Filters</p>
+					</section>
+					<section>
+						<h2>Filters</h2>
+						<p>Skipping Filters</p>
+							<pre><code class="ruby">class ArticlesController < ApplicationController
 	skip_before_filter :require_login, :only => [:new, :create]
 end</code></pre>
-						</div>
 					</section>
 					<section>
 						<h2>Application Controller</h2>
@@ -374,28 +373,20 @@ end</code></pre>
 					<section>
 						<h2>Layouts</h2>
 						<p>Global templates for your views</p>
-						<ul>
-							<li>found in app/views/layouts</li>
-							<li>default layout is application.html.erb</li>
-							<li>
-								can define the layout for a controller response by doing:<br>
-								<pre><code contenteditable>class PopupController < ApplicationController
+						<p>can define the layout for a controller response by doing:</p>
+						<pre><code class="ruby" contenteditable>class PopupController < ApplicationController
 	layout :popup</code></pre>
-								or<br>
-								<pre><code contenteditable>def index
+						</p>or</p>
+						<pre><code class="ruby" contenteditable>def index
 	...
 	render :layout => 'popup'</code></pre>
-							</li>
-							<li>
-								should have yield to an unnamed block<br>
-								<pre><code contenteditable>&lt%= yield %&gt;</code></pre>
-							</li>
-						</ul>
+						<p>requires a yield to an unnamed block</p>
+						<pre><code class="ruby erb" contenteditable>&lt%= yield %&gt;</code></pre>
 					</section>
 					<section>
 						<h2>content_for and yield</h2>
 						<p>yield in your layouts</p>
-						<pre><code contenteditable>&lt;html&gt;
+						<pre><code class="html" contenteditable>&lt;html&gt;
 	&lt;head&gt;
 		&lt;%= yield :head %&gt;
 	&lt;/head&gt;
@@ -403,17 +394,18 @@ end</code></pre>
 		&lt;%= yield %&gt;
 	&lt;/body&gt;
 &lt;/html&gt;</code></pre>
-						<div class="fragment">
-							<p>use content_for in your views</p>
-							<pre><code>&lt;% content_for :head do %&gt;
+					</section>
+					<section>
+						<h2>content_for and yield</h2>
+						<p>use content_for in your views</p>
+						<pre><code class="html" contenteditable>&lt;% content_for :head do %&gt;
 	&lt;title&gt;A simple page&lt;/title&gt;
 &lt;% end %&gt;
 
 &lt;p&gt;Hello, Rails!&lt;/p&gt;</code></pre>
-						</div>
 						<div class="fragment">
 							<p>result:</p>
-							<pre><code>&lt;html&gt;
+							<pre><code class="html">&lt;html&gt;
 	&lt;head&gt;
 		&lt;title&gt;A simple page&lt;/title&gt;
 	&lt;/head&gt;
@@ -543,12 +535,79 @@ end
 					</section>
 					<section>
 						<h2>Sprockets and the Asset Pipeline</h2>
+						<ul>
+							<li>Introduced in Rails 3.1</li>
+							<li>
+								Loads js, css, and image files from:
+								<ul>
+									<li>Gems</li>
+									<li>app/assets</li>
+									<li>lib/assets</li>
+									<li>vendor/assets</li>
+								</ul>
+							</li>
+							<li>Compiles SCSS, CoffeeScript, erb, etc. to appropriate files</li>
+							<li>Must use helpers to include assets in your views</li>
+							<li>Compiles and minifies css and js for production environments</li>
+						</ul>
 					</section>
 					<section>
-						<h2>Requiring Files</h2>
+						<h2>JavaScript and CSS in Your Views</h2>
+						<pre><code><%= stylesheet_link_tag "application" %>
+<%= javascript_include_tag "application" %></code></pre>
+					</section>
+					<section>
+						<h2>Images</h2>
+						<p>In views</p>
+						<pre><code><%= image_tag "ign.png" %></code></pre>
+						<p>In JavaScript and ERB</p>
+						<p>application.js.erb</p>
+						<pre><code class="javascript">$('#logo').attr({
+  src: "<%= asset_path('logo.png') %>"
+});</code></pre>
+					</section>
+					<section>
+						<h2>Images</h2>
+						<p>In CSS and ERB</p>
+						<p>application.css.erb</p>
+						<pre><code>.class { background-image: url(<%= asset_path 'image.png' %>) }</code></pre>
+						<p>In SASS</p>
+						<p>application.css.scss</p>
+						<pre><code>.class { background-image: image-url('image.png') }</code></pre>
+					</section>
+					<section>
+						<h2>Manifest Files</h2>
+						<p>app/assets/javascripts/application.js</p>
+						<pre><code class="javascript">//= require jquery
+//= require jquery_ujs
+//= require self
+//= require_tree .
+
+...</code></pre>
+						<div class="fragment">
+							<p>app/views/layouts/application.html.erb</p>
+							<pre><code><%= javascript_include_tag "application" %></code></pre>
+						</div>
+						<div class="fragment">
+							<p>In development:</p>
+							<pre><code>&lt;script src=&quot;/assets/jquery.js?body=1&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/jquery_ujs.js?body=1&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/application.js?body=1&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/albums.js?body=1&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+						</div>
 					</section>
 					<section>
 						<h2>Compiling JavaScript and CSS</h2>
+						<p>On deployment:</p>
+						<pre><code class="no-highlight">$ rake assets:precompile</code></pre>
+						<div class="fragment">
+							<p>app/views/layouts/application.html.erb</p>
+							<pre><code><%= javascript_include_tag "application" %></code></pre>
+						</div>
+						<div class="fragment">
+							<p>In production:</p>
+							<pre><code>&lt;script src=&quot;/assets/application-9a0f4baf90c2de98350f4dbb.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+						</div>
 					</section>
 				</section>
 
