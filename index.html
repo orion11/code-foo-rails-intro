@@ -39,7 +39,7 @@
 				<section>
 					<section>
 						<h1>Gems</h1>
-						<h3>The ruby packages</h3>
+						<h2>The ruby packages</h2>
 					</section>
 					<section>
 						<h2><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></h2>
@@ -47,7 +47,7 @@
 					</section>
 					<section>
 						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
-						<h3>Ruby Version Manager</h3>
+						<h2>Ruby Version Manager</h2>
 						<pre>
 							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
 $<span class="fragment"> rvm current</span>
@@ -71,8 +71,8 @@ $</span><span class="fragment"> rvm gemdir</span>
 					</section>
 					<section>
 						<h2>Bundler</h2>
-						<h3>Gem dependency manager</h3>
-						Gemfile:
+						<h2>Gem dependency manager</h2>
+						<p>Gemfile:</p>
 						<pre>
 							<code contenteditable>source 'https://rubygems.org'
 
@@ -81,47 +81,57 @@ gem 'rails', '~> 3.2.3'
 
 # Gems used only for assets, not required in production
 group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'jquery-rails', '~> 2.0.1'
-  gem 'sass-rails',   '~> 3.2.3'
+	gem 'coffee-rails', '~> 3.2.1'
+	gem 'jquery-rails', '~> 2.0.1'
+	gem 'sass-rails',	 '~> 3.2.3'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', '~> 0.10.0'
+	# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+	gem 'therubyracer', '~> 0.10.0'
 
-  gem 'uglifier', '>= 1.0.3'
+	gem 'uglifier', '>= 1.0.3'
 end
 
 group :test, :development do
-  gem 'debugger'
-  gem 'rspec-rails', '~> 2.10.0'
-  gem 'webmock', '~> 1.8.5', :require => false
+	gem 'debugger'
+	gem 'rspec-rails', '~> 2.10.0'
+	gem 'webmock', '~> 1.8.5', :require => false
 end</code>
 						</pre>
-						Warning: be careful when running 'bundle update'
+						<p class="fragment">Running 'bundle install' will install all gems in the Gemfile, and create a Gemfile.lock that contains the specific versions installed</p>
+					</section>
+					<section>
+						<h2>Bundler</h2>
+						<p>Commands you should know:</p>
+						<ul>
+							<li>bundle install - installs all the gems in your Gemfile or Gemfile.lock</li>
+							<li>bundle update [GEM_NAME] - update the gems, be careful running this as it updates all</li>
+							<li>bundle exec COMMAND - executes the command within the context of the bundled gems</li>
+							<li>bundle outdated - new in version 1.1, shows you which gems are out of date, and what the latest version is</li>
+						</ul>
 					</section>
 				</section>
 
 				<section>
 					<section>
 						<h1>TDD</h1>
-						<h3>
-							<span class="red fragment">Red</span>
-							<span class="fragment" style="color: green;">Green</span>
-							<span class="fragment">Refactor</span>
-						</h3>
+						<h2>
+							<span class="red">Red</span>
+							<span style="color: green;">Green</span>
+							<span>Refactor</span>
+						</h2>
 					</section>
 					<section>
 						<h2>RSpec</h2>
 						<pre>
 							<code contenteditable>describe '#foo'
-  it 'returns bar' end
-    hello.should eq('bar')
-  end
+	it 'returns bar' end
+		hello.should eq('bar')
+	end
 end</code>
 						</pre>
 						<pre class="fragment">
 							<code contenteditable>def foo
-  'bar'
+	'bar'
 end</code>
 						</pre>
 					</section>
@@ -133,7 +143,8 @@ end</code>
 					</section>
 					<section>
 						<h2>MVC Framework</h2>
-						Model | View | Controller
+						<p>Model | View | Controller</p>
+						<img src="assets/images/mvc_schematic.png">
 					</section>
 					<section>
 						<h2>Creating a New Rails Project</h2>
@@ -205,19 +216,134 @@ end</code>
 				<section>
 					<section>
 						<h1>Controllers</h1>
-							Receives and responds to HTTP requests
+						<p>Receives and responds to HTTP requests</p>
+						<img src="assets/images/mvc_schematic.png">
 					</section>
 					<section>
-						<h2>Application Controller</h2>
+						<h2>Routing</h2>
+						<p>if a article goes to '/articles/12' in their browser</p>
+						<div class="fragment">
+							<p>config/routes.rb</p>
+							<pre><code contenteditable>match "/articles/:id" => "articles#show"</code></pre>
+						</div>
 					</section>
 					<section>
-						<h2>Before Filters</h2>
+						<h2>Actions</h2>
+						<p>app/controllers/articles_controller.rb</p>
+						<pre><code>class ArticlesController < ApplicationController
+	def show
+		@article = Article.find(params[:id])
+	end
+end</code></pre>
+						<ul>
+							<li class="fragment">calls the show action</li>
+							<li class="fragment">the show action finds the article</li>
+							<li class="fragment">renders the app/views/articles/show.html.erb view</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Params</h2>
+						<p>all url parameters will be in a params hash</p>
+						<div class="fragment">
+							<p>config/routes.rb</p>
+							<pre><code contenteditable>match "/articles/:id" => "articles#show"</code></pre>
+						</div>
+						<div class="fragment">
+							<p>/articles/15?foo=bar</p>
+							<pre><code>{ id: 15, foo: 'bar' }</code></pre>
+						</div>
 					</section>
 					<section>
 						<h2>Instance Variables</h2>
+						<p>app/controllers/articles_controller.rb</p>
+						<pre><code>class ArticlesController < ApplicationController
+	def show
+		@article = Article.find(params[:id])
+	end
+end</code></pre>
+						<p class="fragment">
+							@article is an instance variable. You can use it in other method within the same request cycle, or within the view.
+						</p>
 					</section>
 					<section>
 						<h2>Rendering A Response</h2>
+						Defaults to rendering 'app/views/articles/show.html.erb'
+						<ul>
+							<li class="fragment">render nothing<br>
+								<pre><code>render nothing: true</code></pre>
+							</li>
+							<li class="fragment">render another action's view<br>
+								<pre><code>render 'edit'</code></pre>
+							</li>
+							<li class="fragment">render another controller and action's view<br>
+								<pre><code>render layout: 'reviews/edit'</code></pre>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Redirecting</h2>
+						<p>You can redirect to another route in your app by calling 'redirect_to'</p>
+						<pre><code>redirect_to articles_path</code></pre>
+					</section>
+					<section>
+						<h2>Responding to specific formats</h2>
+						<p>articles_controller.rb</p>
+						<pre><code class="ruby">class ArticlesController < ApplicationController
+	def index
+		@articles = Article.all
+		respond_to do |format|
+			format.html # index.html.erb
+			format.xml	{ render :xml => @articles}
+			format.json { render :json => @articles}
+		end
+	end
+end</code></pre>
+					</section>
+					<section>
+						<h2>Filters</h2>
+						<p>Before Filters</p>
+						<pre><code>class ApplicationController < ActionController::Base
+	before_filter :require_login
+
+	private
+
+	def require_login
+		unless logged_in?
+			flash[:error] = "You must be logged in to access this section"
+			redirect_to new_login_url # halts request cycle
+		end
+	end
+
+	def logged_in?
+		!!current_user
+	end
+end</code></pre>
+						<p class="fragment">Around Filters, After Filters</p>
+						<div class="fragment">
+							<p>Skipping Filters</p>
+								<pre><code class="ruby">class ArticlesController < ApplicationController
+	skip_before_filter :require_login, :only => [:new, :create]
+end</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Application Controller</h2>
+						<p>The controller all other controllers should inherit from</p>
+						<pre><code>class ApplicationController < ActionController::Base
+	def get_user
+		User.find(session[:user_id])
+	end
+end</code></pre>
+						<div class="fragment">
+						<p>articles_controller.rb</p>
+							<pre><code class="ruby">class ArticlesController < ApplicationController
+	def create
+		@article = Article.new(params[:article])
+		@article.user = get_user
+		...
+	end
+end</code></pre>
+						</div>
 					</section>
 				</section>
 
@@ -230,42 +356,90 @@ end</code>
 						<h2>ERB: Ruby in Your HTML</h2>
 						<p>Controller:</p>
 						<pre><code contenteditable>def index
-  @articles = [ { name: 'foo' }, { name: 'bar' } ]
+	@articles = [ { name: 'foo' }, { name: 'bar' } ]
 end</code></pre>
 						<p>View:</p>
 						<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
-    &lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
-  &lt;% end %&gt;
+	&lt;% @articles.each do |article| %&gt;
+		&lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
+	&lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<div class="fragment">
 							<p>Result:</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;li&gt;foo&lt;/li&gt;
-  &lt;li&gt;bar&lt;/li&gt;
+	&lt;li&gt;foo&lt;/li&gt;
+	&lt;li&gt;bar&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 					</section>
 					<section>
 						<h2>Layouts</h2>
+						<p>Global templates for your views</p>
+						<ul>
+							<li>found in app/views/layouts</li>
+							<li>default layout is application.html.erb</li>
+							<li>
+								can define the layout for a controller response by doing:<br>
+								<pre><code contenteditable>class PopupController < ApplicationController
+	layout :popup</code></pre>
+								or<br>
+								<pre><code contenteditable>def index
+	...
+	render :layout => 'popup'</code></pre>
+							</li>
+							<li>
+								should have yield to an unnamed block<br>
+								<pre><code contenteditable>&lt%= yield %&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>content_for and yield</h2>
+						<p>yield in your layouts</p>
+						<pre><code contenteditable>&lt;html&gt;
+	&lt;head&gt;
+		&lt;%= yield :head %&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;%= yield %&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+						<div class="fragment">
+							<p>use content_for in your views</p>
+							<pre><code>&lt;% content_for :head do %&gt;
+	&lt;title&gt;A simple page&lt;/title&gt;
+&lt;% end %&gt;
 
+&lt;p&gt;Hello, Rails!&lt;/p&gt;</code></pre>
+						</div>
+						<div class="fragment">
+							<p>result:</p>
+							<pre><code>&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;A simple page&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;p&gt;Hello, Rails!&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+						</div>
 					</section>
 					<section>
 						<h2>Partials</h2>
 						<p>Break your view up into chunks</p>
 						<p>index.html.erb</p>
 						<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
-    &lt;li&gt;
-      &lt;%= article.name %&gt;&lt;br&gt;
-      &lt;%= article.description %&gt;
-    &lt;/li&gt;
-  &lt;% end %&gt;
+	&lt;% @articles.each do |article| %&gt;
+		&lt;li&gt;
+			&lt;%= article.name %&gt;&lt;br&gt;
+			&lt;%= article.description %&gt;
+		&lt;/li&gt;
+	&lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<p>show.html.erb</p>
 						<pre><code contenteditable>&lt;div&gt;
-  &lt;%= @article.name %&gt;&lt;br&gt;
-  &lt;%= @article.description %&gt;
+	&lt;%= @article.name %&gt;&lt;br&gt;
+	&lt;%= @article.description %&gt;
 &lt;/div&gt; </code></pre>
 					</section>
 					<section>
@@ -275,21 +449,21 @@ end</code></pre>
 						<div class="fragment">
 							<p>index.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
-    &lt;li&gt;
-      &lt;%= render partial: 'article', object: article %&gt;
-    &lt;/li&gt;
-  &lt;% end %&gt;
+	&lt;% @articles.each do |article| %&gt;
+		&lt;li&gt;
+			&lt;%= render partial: 'article', object: article %&gt;
+		&lt;/li&gt;
+	&lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 							<p>show.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;%= render partial: 'article', object: @article %&gt;
+	&lt;%= render partial: 'article', object: @article %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 						<div class="fragment">
 							<p>or</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;%= render partial: 'article', locals: { article: @article } %&gt;
+	&lt;%= render partial: 'article', locals: { article: @article } %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 					</section>
@@ -297,20 +471,20 @@ end</code></pre>
 						<h2>HAML</h2>
 						<p>index.html.haml</p>
 						<pre><code contenteditable>%ul#article-list.articles
-  - @objects.each do |object|
-    %li.article= render partial: 'article', object: object
+	- @objects.each do |object|
+		%li.article= render partial: 'article', object: object
 
 .right.column
-  = @user.name</code></pre>
+	= @article.name</code></pre>
 						<div class="fragment">
 							<p>Result</p>
 							<pre><code contenteditable>&lt;ul id=&quot;article-list&quot; class=&quot;articles&quot;&gt;
-  &lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
-  &lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
+	&lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
+	&lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;right column&quot;&gt;
-  Ryan
+	Ryan
 &lt;/div&gt;</code></pre>
 						</div>
 					</section>
@@ -319,16 +493,47 @@ end</code></pre>
 				<section>
 					<section>
 						<h1>Helpers</h1>
-						Reusable view logic
+						Reusable, testable view logic
 					</section>
 					<section>
-						<h2>Built in Helpers</h2>
+						<h2>ActionView::Helpers</h2>
+						<ul>
+							<li>AssetTagHelper</li>
+							<li>DateHelper</li>
+							<li>FormHelper</li>
+							<li>JavaScriptHelper</li>
+							<li>TagHelper</li>
+							<li>TextHelper</li>
+							<li>UrlHelper</li>
+						</ul>
 					</section>
 					<section>
-						<h2>Application Helper</h2>
+						<h2>Custom Helper Methods</h2>
+						<p>app/helpers/articles_helper.rb</p>
+						<pre><code class="ruby">module ArticlesHelper
+	def link_to_article(article, *args)
+		url = "http://www.ign.com/images/articles/#{article.metadata.slug}"
+		link_to url, url, *args
+	end
+end</code></pre>
+						<p>Usage:</p>
+						<pre><code class="erb"><%= link_to_article @article, class: 'article-link' %></code></pre>
 					</section>
 					<section>
-						<h2>Custom Helpers</h2>
+						<h2>Exposing Controller Methods as Helpers</h2>
+						<p>app/controllers/application_controller.rb</p>
+						<pre><code class="ruby">class ApplicationController < ActionController::Base
+	helper_method :access?
+
+	def access?
+		return !!current_user
+	end
+end
+</code></pre>
+						<p>Usage:</p>
+						<pre><code class="erb ruby"><% if access? %>
+	...
+<% end %></code></pre>
 					</section>
 				</section>
 
@@ -341,10 +546,10 @@ end</code></pre>
 						<h2>Sprockets and the Asset Pipeline</h2>
 					</section>
 					<section>
-						<h3>Requiring Files</h3>
+						<h2>Requiring Files</h2>
 					</section>
 					<section>
-						<h3>Compiling JavaScript and CSS</h3>
+						<h2>Compiling JavaScript and CSS</h2>
 					</section>
 				</section>
 
@@ -357,7 +562,7 @@ end</code></pre>
 						<h2>Resources</h2>
 					</section>
 					<section>
-						<h3>Nested Resources</h3>
+						<h2>Nested Resources</h2>
 					</section>
 					<section>
 						<h2>Custom Paths</h2>
@@ -386,7 +591,9 @@ end</code></pre>
 				<section>
 					<section>
 						<h1>Resources</h1>
-						<a href="http://guides.rubyonrails.org/index.html">RailsGuides</a>
+						<a href="http://guides.rubyonrails.org/index.html">Rails Guides</a><br>
+						<a href="http://ruby.railstutorial.org/ruby-on-rails-tutorial-book">Rails Tutorial</a><br>
+						<a href="http://api.rubyonrails.org/">Rails Documentation</a>
 					</section>
 				</section>
 			</div>
@@ -453,6 +660,7 @@ end</code></pre>
 				transition: query.transition || 'default' // default/cube/page/concave/linear(2d)
 			});
 
+			hljs.tabReplace = '  ';
 			hljs.initHighlightingOnLoad();
 		</script>
 
