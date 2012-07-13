@@ -187,15 +187,15 @@ end</code>
 
 					<section>
 						<h2>Generating a Resource</h2>
-						<pre><code contenteditable>$ rails generate resource foo</code></pre>
+						<pre><code contenteditable>$ rails generate resource article</code></pre>
 						<ul class="fragment">
-							<li>create_foo database migration</li>
-							<li>foo model and associated test files</li>
-							<li>foos controller and associated test files</li>
-							<li>foos views directory, but no view files</li>
-							<li>foos helper and associate test files</li>
-							<li>foos assets (JS and CSS)</li>
-							<li>adds 'resources :foos' to your config/routes.rb</li>
+							<li>create_article database migration</li>
+							<li>article model and associated test files</li>
+							<li>articles controller and associated test files</li>
+							<li>articles views directory, but no view files</li>
+							<li>articles helper and associate test files</li>
+							<li>articles assets (JS and CSS)</li>
+							<li>adds 'resources :articles' to your config/routes.rb</li>
 						</ul>
 					</section>
 				</section>
@@ -203,10 +203,85 @@ end</code>
 				<section>
 					<section>
 						<h1>Models</h1>
-						Model your data
+						Model your data with ActiveRecord
 					</section>
 					<section>
-						<h2>Validation</h2>
+						<h2>Database Migrations</h2>
+						<p>Creating a migration</p>
+						<pre><code class="no-highlight">$ rails generate model Article</code></pre>
+						<p>Generates: db/migrate/20120712210018_create_articles.rb</p>
+						<pre><code class="ruby">class CreateArticles < ActiveRecord::Migration
+  def change
+    create_table :articles do |t|
+
+      t.timestamps
+    end
+  end
+end</code></pre>
+					</section>
+					<section>
+						<h2>Database Migrations</h2>
+						<p>Adding columns to your table</p>
+						<pre><code class="ruby">class CreateArticles < ActiveRecord::Migration
+  def change
+    create_table :articles do |t|
+      t.string :headline
+      t.text :body
+      t.datetime :publish_date
+
+      t.timestamps
+    end
+  end
+end</code></pre>
+					</section>
+					<section>
+						<h2>Database Migrations</h2>
+						<p>Modifying an existing table</p>
+						<pre><code class="no-highlight">$ rails generate migration AddSubHeadlineToArticles</code></pre>
+						<p>Generates: db/migrate/20120712210735_add_sub_headline_to_articles.rb</p>
+						<pre><code class="ruby">class AddSubHeadlineToArticles < ActiveRecord::Migration
+  def change
+  end
+end</code></pre>
+						<div class="fragment">
+							<p>Add the column</p>
+							<pre><code class="ruby">class AddSubHeadlineToArticles < ActiveRecord::Migration
+  def change
+    t.string :sub_headline
+  end
+end</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Database Migrations</h2>
+						<p>Running migrations</p>
+						<pre><code class="no-highlight">rake db:create          # Create the database from config/database.yml for the current Rails.env
+rake db:drop            # Drops the database for the current Rails.env
+rake db:fixtures:load   # Load fixtures into the current environment's database.
+rake db:migrate         # Migrate the database (options: VERSION=x, VERBOSE=false).
+rake db:migrate:status  # Display status of migrations
+rake db:rollback        # Rolls the schema back to the previous version (specify steps w/ STEP=n).
+rake db:schema:dump     # Create a db/schema.rb file that can be portably used
+                        # against any DB supported by AR
+rake db:schema:load     # Load a schema.rb file into the database
+rake db:seed            # Load the seed data from db/seeds.rb
+rake db:setup           # Create the database, load the schema, and initialize with the seed data
+rake db:structure:dump  # Dump the database structure to db/structure.sql.
+                        # Specify another file with DB_STRUCTURE=db/my_structure.sql
+rake db:version         # Retrieves the current schema version number</code></pre>
+					</section>
+					<section>
+						<h2>Validations</h2>
+						<p>Validate models before saving them to the database</p>
+						<pre><code class="ruby">class Article < ActiveRecord::Base
+  validates :headline, :presence => true
+end</code></pre>
+					</section>
+					<section>
+						<h2>Associations</h2>
+					</section>
+					<section>
+						<h2>Query Interface</h2>
 					</section>
 				</section>
 
