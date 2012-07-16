@@ -10,10 +10,10 @@ Curious about how it looks in action? [Check out the demo page](http://lab.hakim
 
 ### Markup
 
-Markup heirarchy needs to be ``<div id="reveal"> <div class="slides"> <section>`` where the ``<section>`` represents one slide and can be repeated indefinitely. If you place multiple ``<section>``'s inside of another ``<section>`` they will be shown as vertical slides. For example:
+Markup heirarchy needs to be ``<div class="reveal"> <div class="slides"> <section>`` where the ``<section>`` represents one slide and can be repeated indefinitely. If you place multiple ``<section>``'s inside of another ``<section>`` they will be shown as vertical slides. For example:
 
 ```html
-<div id="reveal">
+<div class="reveal">
 	<div class="slides"> 
 		<section>Single Horizontal Slide</section>
 		<section>
@@ -26,7 +26,7 @@ Markup heirarchy needs to be ``<div id="reveal"> <div class="slides"> <section>`
 
 ### Configuration
 
-At the end of your page, after ``<script src="js/reveal.js"></script>``, you need to initialize reveal by running the following code. Note that all config values are optional.
+At the end of your page, after ``<script src="js/reveal.js"></script>``, you need to initialize reveal by running the following code. Note that all config values are optional and will default as specified below.
 
 ```javascript
 Reveal.initialize({
@@ -36,20 +36,24 @@ Reveal.initialize({
 	// Display a presentation progress bar
 	progress: true,
 
-	// If true; each slide will be pushed to the browser history
-	history: true,
+	// Push each slide change to the browser history
+	history: false,
 
-	// Loops the presentation, defaults to false
+	// Loop the presentation
 	loop: false,
 
-	// Flags if mouse wheel navigation should be enabled
+	// Number of milliseconds between automatically proceeding to the 
+	// next slide, disabled when set to 0
+	autoSlide: 0,
+
+	// Enable slide navigation via mouse wheel
 	mouseWheel: true,
 
 	// Apply a 3D roll to links on hover
 	rollingLinks: true,
 
 	// UI style
-	theme: 'default', // default/neon
+	theme: 'default', // default/neon/beige
 
 	// Transition style
 	transition: 'default' // default/cube/page/concave/linear(2d)
@@ -104,6 +108,31 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 } );
 ```
 
+### Folder Structure
+- **css/** Core styles without which the project does not function
+- **js/** Like above but for JavaScript
+- **plugin/** Components that have been developed as extensions to reveal.js
+- **lib/** All other third party assets (JavaScript, CSS, fonts)
+
+## Speaker Notes
+
+If you're interested in using speaker notes, reveal.js comes with a Node server that allows you to deliver your presentation in one browser while viewing speaker notes in another. 
+
+To include speaker notes in your presentation, simply add an `<aside class="notes">` element to any slide. These notes will be hidden in the main presentation view.
+
+You'll also need to [install Node.js](http://nodejs.org/); then, install the server dependencies by running `npm install`.
+
+Once Node.js and the dependencies are installed, run the following command from the root directory:
+
+		node plugin/speakernotes
+
+By default, the slides will be served at [localhost:1947](http://localhost:1947).
+
+You can change the appearance of the speaker notes by editing the file at `plugin/speakernotes/notes.html`.	
+
+### Known Issues
+
+- The notes page is supposed to show the current slide and the next slide, but when it first starts, it always shows the first slide in both positions. 
 
 ## Examples
 
@@ -128,6 +157,7 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 * [How To Cope With Graphical Challenges Using Latest Web Technologies](http://alexw.me/playground/slideshows/w3c_netcraft/) by [Alex Wolkov](https://github.com/altryne)
 * [Going Deeper with jQuery Mobile](http://andymatthews.net/downloads/presentations/going-deeper-with-jquery-mobile/) by [Andy Matthews](https://github.com/commadelimited)
 * [Studio Nord](http://studionord.org)
+* [Herrljunga Cider](http://herrljungacider.se/uk/campaign/)
 
 
 [Send me a link](http://hakim.se/about/contact) if you used reveal.js for a project or presentation.
@@ -140,6 +170,11 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 - API methods for adding or removing all event listeners
 - The 'slidechange' event now includes currentSlide and previousSlide
 - Fixed bug where 'slidechange' was firing twice when history was enabled
+- Folder structure updates for scalability (see /lib & /plugin)
+- Slide notes by [rmurphey](https://github.com/rmurphey)
+- Bumped up default font-size for code samples
+- Added beige theme
+- Added 'autoSlide' config
 
 #### 1.3
 - Revised keyboard shortcuts, including ESC for overview, N for next, P for previous. Thanks [mahemoff](https://github.com/mahemoff)

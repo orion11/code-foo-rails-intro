@@ -1,5 +1,6 @@
+@charset "UTF-8";
 /**
- * Main styles for reveal.js 
+ * Main styles for reveal.js
  *
  * @author Hakim El Hattab
  */
@@ -11,7 +12,7 @@
 
 @font-face {
 	font-family: 'League Gothic';
-	src: url('../assets/fonts/leaguegothic/league_gothic-webfont.ttf') format('truetype');
+	src: url('../lib/font/league_gothic-webfont.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -34,7 +35,7 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
-	
+
 	font-family: 'Lato', Times, 'Times New Roman', serif;
 	font-size: 36px;
 	font-weight: 200;
@@ -54,18 +55,18 @@ body {
 /*********************************************
  * HEADERS
  *********************************************/
-.reveal h1, 
-.reveal h2, 
-.reveal h3, 
+.reveal h1,
+.reveal h2,
+.reveal h3,
 .reveal h4 {
 	margin: 0 0 20px 0;
-	
+
 	color: #eee;
-	
+
 	font-family: 'League Gothic', sans-serif;
 	line-height: 0.9em;
 	letter-spacing: 0.02em;
-	
+
 	text-transform: uppercase;
 	text-shadow: 0px 0px 6px rgba(0,0,0,0.2);
 }
@@ -125,17 +126,17 @@ body {
 	font-weight: normal;
 }
 
-.reveal strong, 
+.reveal strong,
 .reveal b {
 	font-weight: bold;
 }
 
-.reveal em, 
+.reveal em,
 .reveal i {
 	font-style: italic;
 }
 
-.reveal ol, 
+.reveal ol,
 .reveal ul {
 	display: inline-block;
 
@@ -177,7 +178,7 @@ body {
 	width: 70%;
 	margin: 5px auto;
 	padding: 5px;
-	
+
 	font-style: italic;
 	background: rgba(255, 255, 255, 0.05);
 	box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
@@ -196,7 +197,7 @@ body {
 	margin: 10px auto;
 
 	text-align: left;
-	font-size: 14px;
+	font-size: 20px;
 	font-family: monospace;
 	line-height: 1.2em;
 
@@ -209,7 +210,7 @@ body {
 	font-family: monospace;
 }
 
-.reveal table th, 
+.reveal table th,
 .reveal table td {
  	 text-align: left;
  	 padding-right: .3em;
@@ -225,7 +226,11 @@ body {
 	vertical-align: top;
 }
 
-.reveal q {	
+.reveal small * {
+	vertical-align: top;
+}
+
+.reveal q {
 	font-style: italic;
 }
 	.reveal q:before {
@@ -239,16 +244,16 @@ body {
 	color: hsl(185, 85%, 50%);
 	text-decoration: none;
 
-	-webkit-transition: all .2s ease;
-	   -moz-transition: all .2s ease;
-	    -ms-transition: all .2s ease;
-	     -o-transition: all .2s ease;
-	        transition: all .2s ease;
+	-webkit-transition: color .15s ease;
+	   -moz-transition: color .15s ease;
+	    -ms-transition: color .15s ease;
+	     -o-transition: color .15s ease;
+	        transition: color .15s ease;
 }
-	
+
 	.reveal a:not(.image):hover {
 		color: hsl(185, 85%, 70%);
-		background: hsla(185, 25%, 20%, 0.4);
+
 		text-shadow: none;
 		border: none;
 		border-radius: 2px;
@@ -258,11 +263,11 @@ body {
 	margin: 30px 0 0 0;
 	background: rgba(255,255,255,0.12);
 	border: 4px solid #eee;
-	
+
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-	
+
 	-webkit-transition: all .2s linear;
 	   -moz-transition: all .2s linear;
 	    -ms-transition: all .2s linear;
@@ -273,7 +278,7 @@ body {
 	.reveal a:hover img {
 		background: rgba(255,255,255,0.2);
 		border-color: #13DAEC;
-		
+
 		-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
 		   -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
 		        box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
@@ -294,7 +299,7 @@ body {
 	right: 0;
 	bottom: 0;
 }
-	
+
 	.reveal .controls a {
 		font-size: 30px;
 		position: absolute;
@@ -345,7 +350,7 @@ body {
 
 	background: rgba(0,0,0,0.2);
 }
-	
+
 	.reveal .progress span {
 		display: block;
 		background: hsl(185, 85%, 50%);
@@ -394,12 +399,12 @@ body {
        -moz-transition: all 400ms ease;
         -ms-transition: all 400ms ease;
             transition: all 400ms ease;
-    
+
     -webkit-transform-origin: 50% 0%;
        -moz-transform-origin: 50% 0%;
         -ms-transform-origin: 50% 0%;
             transform-origin: 50% 0%;
-    
+
     -webkit-transform-style: preserve-3d;
        -moz-transform-style: preserve-3d;
         -ms-transform-style: preserve-3d;
@@ -445,13 +450,13 @@ body {
 	position: absolute;
 	width: 900px;
 	height: 600px;
-	
+
 	left: 50%;
 	top: 50%;
 	margin-left: -450px;
 	margin-top: -320px;
 	padding: 20px 0px;
-	
+
 	text-align: center;
 
 	-webkit-transition: -webkit-perspective .4s ease;
@@ -459,7 +464,7 @@ body {
 	    -ms-transition: -ms-perspective .4s ease;
 	     -o-transition: -o-perspective .4s ease;
 	        transition: perspective .4s ease;
-	
+
 	-webkit-perspective: 600px;
 	   -moz-perspective: 600px;
 	    -ms-perspective: 600px;
@@ -479,12 +484,12 @@ body {
 	min-height: 600px;
 
     z-index: 10;
-	
+
 	-webkit-transform-style: preserve-3d;
 	   -moz-transform-style: preserve-3d;
 	    -ms-transform-style: preserve-3d;
 	        transform-style: preserve-3d;
-	
+
 	-webkit-transition: all 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
 	   -moz-transition: all 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
 	    -ms-transition: all 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
@@ -506,7 +511,7 @@ body {
 .reveal .slides>section.past {
 	display: block;
 	opacity: 0;
-	
+
 	-webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
 	   -moz-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
 	    -ms-transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
@@ -515,7 +520,7 @@ body {
 .reveal .slides>section.future {
 	display: block;
 	opacity: 0;
-	
+
 	-webkit-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
 	   -moz-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
 	    -ms-transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
@@ -525,7 +530,7 @@ body {
 .reveal .slides>section>section.past {
 	display: block;
 	opacity: 0;
-	
+
 	-webkit-transform: translate3d(0, -50%, 0) rotateX(70deg) translate3d(0, -50%, 0);
 	   -moz-transform: translate3d(0, -50%, 0) rotateX(70deg) translate3d(0, -50%, 0);
 	    -ms-transform: translate3d(0, -50%, 0) rotateX(70deg) translate3d(0, -50%, 0);
@@ -534,7 +539,7 @@ body {
 .reveal .slides>section>section.future {
 	display: block;
 	opacity: 0;
-	
+
 	-webkit-transform: translate3d(0, 50%, 0) rotateX(-70deg) translate3d(0, 50%, 0);
 	   -moz-transform: translate3d(0, 50%, 0) rotateX(-70deg) translate3d(0, 50%, 0);
 	    -ms-transform: translate3d(0, 50%, 0) rotateX(-70deg) translate3d(0, 50%, 0);
@@ -632,7 +637,7 @@ body {
 	   -moz-backface-visibility: hidden;
 	    -ms-backface-visibility: hidden;
 	        backface-visibility: hidden;
-	
+
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
@@ -848,19 +853,61 @@ body {
  * NEON THEME
  *********************************************/
 
-.reveal.neon a,
-.reveal.neon a:hover,
-.reveal.neon .controls a.enabled {
+.theme-neon .reveal a,
+.theme-neon .reveal a:hover,
+.theme-neon .reveal .controls a.enabled {
 	color: #5de048;
 }
 
-.reveal.neon .progress span,
-.reveal.neon .roll span:after {
+.theme-neon .reveal .progress span,
+.theme-neon .reveal .roll span:after {
 	background: #5de048;
 }
 
-.reveal.neon a.image:hover img {
+.theme-neon .reveal a.image:hover img {
 	border-color: #5de048;
+}
+
+
+/*********************************************
+ * BEIGE THEME
+ *********************************************/
+
+.theme-beige body {
+	color: #333;
+
+	background: #f7f3de;
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(247,242,211,1) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(247,242,211,1)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(247,242,211,1) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(247,242,211,1) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(247,242,211,1) 100%);
+	background: radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(247,242,211,1) 100%);
+}
+
+.theme-beige .reveal h1,
+.theme-beige .reveal h2,
+.theme-beige .reveal h3,
+.theme-beige .reveal h4,
+.theme-beige .reveal h5,
+.theme-beige .reveal h6 {
+	color: #333;
+	text-shadow: none;
+}
+
+.theme-beige .reveal a,
+.theme-beige .reveal a:hover,
+.theme-beige .reveal .controls a.enabled {
+	color: #8b743d;
+}
+
+.theme-beige .reveal .progress span,
+.theme-beige .reveal .roll span:after {
+	background: #8b743d;
+}
+
+.theme-beige .reveal a.image:hover img {
+	border-color: #8b743d;
 }
 
 
@@ -918,7 +965,7 @@ body {
 	   -moz-transform: none;
 	    -ms-transform: none;
 	        transform: none;
-	
+
 	display: block!important;
 	opacity: 1!important;
 	position: relative!important;
@@ -947,10 +994,14 @@ body {
 .soothe .state-background {
 	background: rgba( 50, 200, 90, 0.4 );
 }
-.blackout .state-background {
+.blackout .state-background, .theme-blackout .state-background {
 	background: rgba( 0, 0, 0, 0.6 );
 }
 
+/*********************************************
+ * SPEAKER NOTES
+ *********************************************/
 
-
-
+.reveal aside.notes {
+	display: none;
+}
