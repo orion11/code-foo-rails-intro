@@ -272,10 +272,23 @@ rake db:version         # Retrieves the current schema version number</code></pr
 					</section>
 					<section>
 						<h2>Validations</h2>
-						<p>Validate models before saving them to the database</p>
+						<p>Validate model attributes before saving them to the database</p>
 						<pre><code class="ruby">class Article < ActiveRecord::Base
   validates :headline, :presence => true
 end</code></pre>
+					</section>
+					<section>
+						<h2>Validations</h2>
+						<p>Validation methods</p>
+						<ul>
+							<li>acceptance - boolean must be true</li>
+							<li>confirmation - :key and :key_confirmation must be present and equal</li>
+							<li>incluscion/exclusion - must be in or notin an array of valid values</li>
+							<li>format - must match a regex</li>
+							<li>length - specify min/max length</li>
+							<li>numericality - must be a number</li>
+							<li>uniqueness - must be unique in the database</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Associations</h2>
