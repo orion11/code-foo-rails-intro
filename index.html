@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Code Foo :: Intro to Ruby on Rails</title>
+		<title>CodeFoo :: Introduction to Ruby on Rails</title>
 
 		<meta name="description" content="A presentation for IGN's Code Foo program on Ruby on Rails">
 		<meta name="author" content="Ryan Sullivan">
@@ -50,20 +50,20 @@
 						<h2>Ruby Version Manager</h2>
 						<pre>
 							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
-$<span class="fragment"> rvm current</span>
-<span class="fragment">ruby-1.9.3-p194
-$</span><span class="fragment"> rvm gemdir</span>
-<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194</span></code>
+$ rvm current
+ruby-1.9.3-p194
+$ rvm gemdir
+/Users/ryan/.rvm/gems/ruby-1.9.3-p194</code>
 						</pre>
 					</section>
 					<section>
 						<h2>RVM: Gemsets</h2>
 						<pre>
 							<code class="no-highlight" contenteditable>$ rvm use --install --create 1.9.3@code-foo
-$<span class="fragment"> rvm current</span>
-<span class="fragment">ruby-1.9.3-p194@code-foo
-$</span><span class="fragment"> rvm gemdir</span>
-<span class="fragment">/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</span></code>
+$ rvm current
+ruby-1.9.3-p194@code-foo
+$ rvm gemdir
+/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</code>
 						</pre>
 					</section>
 					<section>
@@ -73,25 +73,23 @@ $</span><span class="fragment"> rvm gemdir</span>
 						<h2>Bundler</h2>
 						<p>Gemfile:</p>
 						<pre>
-							<code contenteditable>source 'https://rubygems.org'
+							<code class="ruby" contenteditable>source 'https://rubygems.org'
 
 gem 'faraday', '~> 0.8.0'
 gem 'rails', '~> 3.2.3'
 
 # Gems used only for assets, not required in production
 group :assets do
-	gem 'jquery-rails', '2.0.1'
-	gem 'sass-rails', '=> 3.2.3'
-
-	# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-	gem 'therubyracer', '~> 0.10.0'
-	gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-rails', '2.0.1'
+  gem 'sass-rails', '=> 3.2.3'
+  gem 'therubyracer', '~> 0.10.0'
+  gem 'uglifier', '>= 1.0.3'
 end
 
 group :test, :development do
-	gem 'debugger'
-	gem 'rspec-rails', '~> 2.10.0'
-	gem 'webmock', '~> 1.8.5', :require => false
+  gem 'debugger'
+  gem 'rspec-rails', '~> 2.10.0'
+  gem 'webmock', '~> 1.8.5', :require => false
 end</code>
 						</pre>
 						<small><p class="fragment">Running 'bundle install' will install all gems in the Gemfile, and create a Gemfile.lock that contains the specific versions installed</p></small>
@@ -120,15 +118,15 @@ end</code>
 					<section>
 						<h2>RSpec</h2>
 						<pre>
-							<code contenteditable>describe '#foo'
-	it 'returns bar' end
-		hello.should eq('bar')
-	end
+							<code class="ruby" contenteditable>describe '#foo'
+  it 'returns bar' end
+    hello.should eq('bar')
+  end
 end</code>
 						</pre>
 						<pre class="fragment">
-							<code contenteditable>def foo
-	'bar'
+							<code class="ruby" contenteditable>def foo
+  'bar'
 end</code>
 						</pre>
 					</section>
@@ -147,12 +145,12 @@ end</code>
 						<h2>Creating a New Rails Project</h2>
 						<ol>
 							<li>
-								Install Rails<br>
-								<pre><code contenteditable>$ gem install rails</code></pre>
+								Install the Rails Gem<br>
+								<pre><code class="no-highlight" contenteditable>$ gem install rails</code></pre>
 							</li>
 							<li class="fragment">
-								Create a Project<br>
-								<pre><code contenteditable>$ rails new code-foo</code></pre>
+								Create a New Rails Project<br>
+								<pre><code class="no-highlight" contenteditable>$ rails new code-foo</code></pre>
 							</li>
 						</ol>
 					</section>
@@ -181,13 +179,13 @@ end</code>
 
 					<section>
 						<h2>Starting your Application Server</h2>
-						<pre><code contenteditable>$ rails server</code></pre>
+						<pre><code class="no-highlight" contenteditable>$ rails server</code></pre>
 						You can now view your application by going to localhost:3000 in a browser
 					</section>
 
 					<section>
 						<h2>Generating a Resource</h2>
-						<pre><code contenteditable>$ rails generate resource article</code></pre>
+						<pre><code class="no-highlight" contenteditable>$ rails generate resource article</code></pre>
 						<ul class="fragment">
 							<li>create_article database migration</li>
 							<li>article model and associated test files</li>
@@ -255,20 +253,23 @@ end</code></pre>
 					<section>
 						<h2>Database Migrations</h2>
 						<p>Running migrations</p>
-						<pre><code class="no-highlight">rake db:create          # Create the database from config/database.yml for the current Rails.env
-rake db:drop            # Drops the database for the current Rails.env
-rake db:fixtures:load   # Load fixtures into the current environment's database.
-rake db:migrate         # Migrate the database (options: VERSION=x, VERBOSE=false).
-rake db:migrate:status  # Display status of migrations
-rake db:rollback        # Rolls the schema back to the previous version (specify steps w/ STEP=n).
-rake db:schema:dump     # Create a db/schema.rb file that can be portably used
-                        # against any DB supported by AR
-rake db:schema:load     # Load a schema.rb file into the database
-rake db:seed            # Load the seed data from db/seeds.rb
-rake db:setup           # Create the database, load the schema, and initialize with the seed data
-rake db:structure:dump  # Dump the database structure to db/structure.sql.
-                        # Specify another file with DB_STRUCTURE=db/my_structure.sql
-rake db:version         # Retrieves the current schema version number</code></pre>
+						<pre><code class="no-highlight">rake db:create         # Create the database from config/database.yml
+                       # for the current Rails.env
+rake db:drop           # Drops the database for the current Rails.env
+rake db:fixtures:load  # Load fixtures into the current environment's database.
+rake db:migrate        # Migrate the database
+                       # (options: VERSION=x, VERBOSE=false).
+rake db:migrate:status # Display status of migrations
+rake db:rollback       # Rolls the schema back to the previous version
+                       # (specify steps w/ STEP=n).
+rake db:schema:dump    # Create a db/schema.rb file that can be portably used
+                       # against any DB supported by AR
+rake db:schema:load    # Load a schema.rb file into the database
+rake db:seed           # Load the seed data from db/seeds.rb
+rake db:setup          # Create the database, load the schema,
+                       # and initialize with the seed data
+rake db:structure:dump # Dump the database structure to db/structure.sql.
+rake db:version        # Retrieves the current schema version number</code></pre>
 					</section>
 					<section>
 						<h2>Validations</h2>
@@ -316,9 +317,9 @@ end</code></pre>
 						<h2>Actions</h2>
 						<p>app/controllers/articles_controller.rb</p>
 						<pre><code>class ArticlesController < ApplicationController
-	def show
-		@article = Article.find(params[:id])
-	end
+  def show
+    @article = Article.find(params[:id])
+  end
 end</code></pre>
 						<ul>
 							<li class="fragment">calls the show action</li>
@@ -342,9 +343,9 @@ end</code></pre>
 						<h2>Instance Variables</h2>
 						<p>app/controllers/articles_controller.rb</p>
 						<pre><code>class ArticlesController < ApplicationController
-	def show
-		@article = Article.find(params[:id])
-	end
+  def show
+    @article = Article.find(params[:id])
+  end
 end</code></pre>
 						<p class="fragment">
 							@article is an instance variable. You can use it in other method within the same request cycle, or within the view.
@@ -355,53 +356,53 @@ end</code></pre>
 						Defaults to rendering 'app/views/articles/show.html.erb'
 						<ul>
 							<li class="fragment">render nothing<br>
-								<pre><code>render nothing: true</code></pre>
+								<pre><code class="ruby" contenteditable>render nothing: true</code></pre>
 							</li>
 							<li class="fragment">render another action's view<br>
-								<pre><code>render 'edit'</code></pre>
+								<pre><code class="ruby" contenteditable>render 'edit'</code></pre>
 							</li>
 							<li class="fragment">render another controller and action's view<br>
-								<pre><code>render layout: 'reviews/edit'</code></pre>
+								<pre><code class="ruby" contenteditable>render layout: 'reviews/edit'</code></pre>
 							</li>
 						</ul>
 					</section>
 					<section>
 						<h2>Redirecting</h2>
 						<p>You can redirect to another route in your app by calling 'redirect_to'</p>
-						<pre><code>redirect_to articles_path</code></pre>
+						<pre><code class="ruby" contenteditable>redirect_to articles_path</code></pre>
 					</section>
 					<section>
 						<h2>Responding to specific formats</h2>
 						<p>articles_controller.rb</p>
-						<pre><code class="ruby">class ArticlesController < ApplicationController
-	def index
-		@articles = Article.all
-		respond_to do |format|
-			format.html # index.html.erb
-			format.xml { render :xml => @articles}
-			format.json { render :json => @articles}
-		end
-	end
+						<pre><code class="ruby" contenteditable>class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml { render :xml => @articles}
+      format.json { render :json => @articles}
+    end
+  end
 end</code></pre>
 					</section>
 					<section>
 						<h2>Filters</h2>
 						<p>Before Filters</p>
 						<pre><code>class ApplicationController < ActionController::Base
-	before_filter :require_login
+  before_filter :require_login
 
-	private
+  private
 
-	def require_login
-		unless logged_in?
-			flash[:error] = "You must be logged in to access this section"
-			redirect_to new_login_url # halts request cycle
-		end
-	end
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to new_login_url # halts request cycle
+    end
+  end
 
-	def logged_in?
-		!!current_user
-	end
+  def logged_in?
+    !!current_user
+  end
 end</code></pre>
 					<p class="fragment">Around Filters, After Filters</p>
 					</section>
@@ -409,25 +410,25 @@ end</code></pre>
 						<h2>Filters</h2>
 						<p>Skipping Filters</p>
 							<pre><code class="ruby">class ArticlesController < ApplicationController
-	skip_before_filter :require_login, :only => [:new, :create]
+  skip_before_filter :require_login, :only => [:new, :create]
 end</code></pre>
 					</section>
 					<section>
 						<h2>Application Controller</h2>
 						<p>The controller all other controllers should inherit from</p>
 						<pre><code>class ApplicationController < ActionController::Base
-	def get_user
-		User.find(session[:user_id])
-	end
+  def get_user
+    User.find(session[:user_id])
+  end
 end</code></pre>
 						<div class="fragment">
 						<p>articles_controller.rb</p>
 							<pre><code class="ruby">class ArticlesController < ApplicationController
-	def create
-		@article = Article.new(params[:article])
-		@article.user = get_user
-		...
-	end
+  def create
+    @article = Article.new(params[:article])
+    @article.user = get_user
+    ...
+  end
 end</code></pre>
 						</div>
 					</section>
@@ -442,19 +443,19 @@ end</code></pre>
 						<h2>ERB: Ruby in Your HTML</h2>
 						<p>Controller:</p>
 						<pre><code contenteditable>def index
-	@articles = [ { name: 'foo' }, { name: 'bar' } ]
+  @articles = [ { name: 'foo' }, { name: 'bar' } ]
 end</code></pre>
 						<p>View:</p>
 						<pre><code contenteditable>&lt;ul&gt;
-	&lt;% @articles.each do |article| %&gt;
-		&lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
-	&lt;% end %&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<div class="fragment">
 							<p>Result:</p>
 							<pre><code contenteditable>&lt;ul&gt;
-	&lt;li&gt;foo&lt;/li&gt;
-	&lt;li&gt;bar&lt;/li&gt;
+  &lt;li&gt;foo&lt;/li&gt;
+  &lt;li&gt;bar&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 					</section>
@@ -466,8 +467,8 @@ end</code></pre>
 	layout :popup</code></pre>
 						</p>or</p>
 						<pre><code class="ruby" contenteditable>def index
-	...
-	render :layout => 'popup'</code></pre>
+  ...
+  render :layout => 'popup'</code></pre>
 						<p>requires a yield to an unnamed block</p>
 						<pre><code class="ruby erb" contenteditable>&lt%= yield %&gt;</code></pre>
 					</section>
@@ -475,31 +476,31 @@ end</code></pre>
 						<h2>content_for and yield</h2>
 						<p>yield in your layouts</p>
 						<pre><code class="html" contenteditable>&lt;html&gt;
-	&lt;head&gt;
-		&lt;%= yield :head %&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;%= yield %&gt;
-	&lt;/body&gt;
+  &lt;head&gt;
+    &lt;%= yield :head %&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;%= yield %&gt;
+  &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 					</section>
 					<section>
 						<h2>content_for and yield</h2>
 						<p>use content_for in your views</p>
 						<pre><code class="html" contenteditable>&lt;% content_for :head do %&gt;
-	&lt;title&gt;A simple page&lt;/title&gt;
+  &lt;title&gt;A simple page&lt;/title&gt;
 &lt;% end %&gt;
 
 &lt;p&gt;Hello, Rails!&lt;/p&gt;</code></pre>
 						<div class="fragment">
 							<p>result:</p>
 							<pre><code class="html">&lt;html&gt;
-	&lt;head&gt;
-		&lt;title&gt;A simple page&lt;/title&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;p&gt;Hello, Rails!&lt;/p&gt;
-	&lt;/body&gt;
+  &lt;head&gt;
+    &lt;title&gt;A simple page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Hello, Rails!&lt;/p&gt;
+  &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 						</div>
 					</section>
@@ -508,17 +509,17 @@ end</code></pre>
 						<p>Break your view up into chunks</p>
 						<p>index.html.erb</p>
 						<pre><code contenteditable>&lt;ul&gt;
-	&lt;% @articles.each do |article| %&gt;
-		&lt;li&gt;
-			&lt;%= article.name %&gt;&lt;br&gt;
-			&lt;%= article.description %&gt;
-		&lt;/li&gt;
-	&lt;% end %&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;
+      &lt;%= article.name %&gt;&lt;br&gt;
+      &lt;%= article.description %&gt;
+    &lt;/li&gt;
+  &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<p>show.html.erb</p>
 						<pre><code contenteditable>&lt;div&gt;
-	&lt;%= @article.name %&gt;&lt;br&gt;
-	&lt;%= @article.description %&gt;
+  &lt;%= @article.name %&gt;&lt;br&gt;
+  &lt;%= @article.description %&gt;
 &lt;/div&gt; </code></pre>
 					</section>
 					<section>
@@ -528,21 +529,21 @@ end</code></pre>
 						<div class="fragment">
 							<p>index.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-	&lt;% @articles.each do |article| %&gt;
-		&lt;li&gt;
-			&lt;%= render partial: 'article', object: article %&gt;
-		&lt;/li&gt;
-	&lt;% end %&gt;
+  &lt;% @articles.each do |article| %&gt;
+    &lt;li&gt;
+      &lt;%= render partial: 'article', object: article %&gt;
+    &lt;/li&gt;
+  &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 							<p>show.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-	&lt;%= render partial: 'article', object: @article %&gt;
+  &lt;%= render partial: 'article', object: @article %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 						<div class="fragment">
 							<p>or</p>
 							<pre><code contenteditable>&lt;ul&gt;
-	&lt;%= render partial: 'article', locals: { article: @article } %&gt;
+  &lt;%= render partial: 'article', locals: { article: @article } %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 					</section>
@@ -550,20 +551,20 @@ end</code></pre>
 						<h2>HAML</h2>
 						<p>index.html.haml</p>
 						<pre><code contenteditable>%ul#article-list.articles
-	- @objects.each do |object|
-		%li.article= render partial: 'article', object: object
+  - @objects.each do |object|
+    %li.article= render partial: 'article', object: object
 
 .right.column
-	= @article.name</code></pre>
+  = @article.name</code></pre>
 						<div class="fragment">
 							<p>Result</p>
 							<pre><code contenteditable>&lt;ul id=&quot;article-list&quot; class=&quot;articles&quot;&gt;
-	&lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
-	&lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
+  &lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
+  &lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;right column&quot;&gt;
-	Ryan
+  Ryan
 &lt;/div&gt;</code></pre>
 						</div>
 					</section>
@@ -590,10 +591,10 @@ end</code></pre>
 						<h2>Custom Helper Methods</h2>
 						<p>app/helpers/articles_helper.rb</p>
 						<pre><code class="ruby">module ArticlesHelper
-	def link_to_article(article, *args)
-		url = "http://www.ign.com/images/articles/#{article.metadata.slug}"
-		link_to url, url, *args
-	end
+  def link_to_article(article, *args)
+    url = "http://www.ign.com/images/articles/#{article.metadata.slug}"
+    link_to url, url, *args
+  end
 end</code></pre>
 						<p>Usage:</p>
 						<pre><code class="erb"><%= link_to_article @article, class: 'article-link' %></code></pre>
@@ -602,16 +603,16 @@ end</code></pre>
 						<h2>Exposing Controller Methods as Helpers</h2>
 						<p>app/controllers/application_controller.rb</p>
 						<pre><code class="ruby">class ApplicationController < ActionController::Base
-	helper_method :access?
+  helper_method :access?
 
-	def access?
-		return !!current_user
-	end
+  def access?
+    return !!current_user
+  end
 end
 </code></pre>
 						<p>Usage:</p>
 						<pre><code class="erb ruby"><% if access? %>
-	...
+  ...
 <% end %></code></pre>
 					</section>
 				</section>
@@ -846,11 +847,9 @@ thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thum
 			head.js( 'lib/js/classList.js' );
 			head.js( 'lib/js/highlight.js', function() {
 				// Fire off syntax highlighting for potential code samples in the slides
+				hljs.tabReplace = '  ';
 				hljs.initHighlightingOnLoad();
 			} );
-
-			hljs.tabReplace = '  ';
-			hljs.initHighlightingOnLoad();
 
 			// If we're runnning the notes server we need to include some additional JS
 			// TODO Is there a better way to determine if we're running the notes server?
