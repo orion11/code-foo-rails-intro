@@ -274,26 +274,6 @@ rake db:structure:dump # Dump the database structure to db/structure.sql.
 rake db:version        # Retrieves the current schema version number</code></pre>
 					</section>
 					<section>
-						<h2>Validations</h2>
-						<p>Validate model attributes before saving them to the database</p>
-						<pre><code class="ruby">class Article < ActiveRecord::Base
-  validates :headline, :presence => true
-end</code></pre>
-					</section>
-					<section>
-						<h2>Validations</h2>
-						<p>Validation methods</p>
-						<ul>
-							<li>acceptance - boolean must be true</li>
-							<li>confirmation - :key and :key_confirmation must be present and equal</li>
-							<li>incluscion/exclusion - must be in or notin an array of valid values</li>
-							<li>format - must match a regex</li>
-							<li>length - specify min/max length</li>
-							<li>numericality - must be a number</li>
-							<li>uniqueness - must be unique in the database</li>
-						</ul>
-					</section>
-					<section>
 						<h2>Associations</h2>
 						<p>app/models/album.rb</p>
 						<pre><code class="ruby">class Album < ActiveRecord::Base
@@ -382,6 +362,26 @@ end</code></pre>
 							<p>save!</p>
 							<pre><code class="ruby">image.save!</code></pre>
 						</div>
+					</section>
+					<section>
+						<h2>Validations</h2>
+						<p>Validate model attributes before saving them to the database</p>
+						<pre><code class="ruby">class Article < ActiveRecord::Base
+  validates :headline, :presence => true
+end</code></pre>
+					</section>
+					<section>
+						<h2>Validations</h2>
+						<p>Validation methods</p>
+						<ul>
+							<li>acceptance - boolean must be true</li>
+							<li>confirmation - :key and :key_confirmation must be present and equal</li>
+							<li>incluscion/exclusion - must be in or notin an array of valid values</li>
+							<li>format - must match a regex</li>
+							<li>length - specify min/max length</li>
+							<li>numericality - must be a number</li>
+							<li>uniqueness - must be unique in the database</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Business Logic</h2>
@@ -868,27 +868,71 @@ thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thum
 				<section>
 					<section>
 						<h1>Rails at IGN</h1>
-						Rails in a Service Oriented World
+						<p>Rails in a Service Oriented World</p>
+						<img src="assets/images/ign.png" width="350">
 					</section>
 					<section>
 						<h2>No ActiveRecord</h2>
+						<p>Just plain old ruby objects</p>
+						<pre><code class="ruby">class Image
+  ...
+end</code></pre>
 					</section>
 					<section>
 						<h2>Faraday</h2>
+						<p>HTTP gem</p>
+						<pre><code class="ruby">def self.setup_faraday
+  conn = Faraday.new(:url => "http://api.ign.com/image/v3/images") do |conn|
+    conn.request :multipart
+    conn.request :json
+    conn.request :url_encoded
+    conn.response :logger, Rails.logger
+
+    conn.response :json, :content_type => /\bjson$/
+    conn.adapter :net_http
+  end
+
+  conn.headers[:cache_control] = 'no-cache'
+  conn
+end</code></pre>
+						<pre><code class="ruby">def find(id)
+  conn = setup_faraday
+  parse_response(conn.get(id.to_s, :fresh => 'true')) do |response|
+    self.new(response)
+  end
+end</code></pre>
 					</section>
 					<section>
 						<h2>WebMock</h2>
+						<p>Stubs out all HTTP requests</p>
+						<pre><code class="ruby">describe 'self#destroy' do
+  before(:each) do
+    stub_request(:delete, /#{V3_API_URL}\/images\/.*/)
+  end
+
+  it 'calls the delete api with the correct id' do
+    Image.destroy('1234')
+    a_request(:delete, /#{V3_API_URL}\/images\/1234\?.*/).should have_been_made
+  end
+
+  ...
+
+end</code></pre>
 					</section>
 				</section>
 
 				<section>
-					<section>
-						<h1>Resources</h1>
-						<a href="http://guides.rubyonrails.org/index.html">Rails Guides</a><br>
-						<a href="http://ruby.railstutorial.org/ruby-on-rails-tutorial-book">Rails Tutorial</a><br>
-						<a href="http://api.rubyonrails.org/">Rails Documentation</a>
-						<a href="http://www.rubyflow.com/">RubyFlow</a>
-					</section>
+					<h1>Resources</h1>
+					<a href="http://guides.rubyonrails.org/index.html">Rails Guides</a><br>
+					<a href="http://ruby.railstutorial.org/ruby-on-rails-tutorial-book">Rails Tutorial</a><br>
+					<a href="http://api.rubyonrails.org/">Rails Documentation</a><br>
+					<a href="http://rubyrogues.com/">Ruby Rogues Podcast</a><br>
+					<a href="http://rubyweekly.com/">Ruby Weekly Newsletter</a><br>
+					<a href="http://www.rubyflow.com/">RubyFlow</a><br>
+				</section>
+
+				<section>
+					<h1>Questions</h1>
 				</section>
 			</div>
 
