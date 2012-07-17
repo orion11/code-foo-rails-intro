@@ -40,6 +40,7 @@
 					<section>
 						<h1>Gems</h1>
 						<h2>The ruby packages</h2>
+						<img src="assets/images/ruby.png">
 					</section>
 					<section>
 						<h2><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></h2>
@@ -112,8 +113,9 @@ end</code>
 						<h2>
 							<span class="red">Red</span>
 							<span style="color: green;">Green</span>
-							<span>Refactor</span>
+							<span style="color: yellow;">Refactor</span>
 						</h2>
+						<img src="assets/images/traffic.png" height="300">
 					</section>
 					<section>
 						<h2>RSpec</h2>
@@ -293,9 +295,104 @@ end</code></pre>
 					</section>
 					<section>
 						<h2>Associations</h2>
+						<p>app/models/album.rb</p>
+						<pre><code class="ruby">class Album < ActiveRecord::Base
+end</code></pre>
+						<p>app/models/image.rb</p>
+						<pre><code class="ruby">class Image < ActiveRecord::Base
+end</code></pre>
+					</section>
+					<section>
+						<h2>Associations</h2>
+						<p>app/models/album.rb</p>
+						<pre><code class="ruby">class Album < ActiveRecord::Base
+  has_many :images
+end</code></pre>
+						<p>app/models/image.rb</p>
+						<pre><code class="ruby">class Image < ActiveRecord::Base
+  belongs_to :album
+end</code></pre>
+					</section>
+					<section>
+						<h2>Associations</h2>
+						<p>Types of associations</p>
+						<ul>
+							<li><tt>belongs_to</tt></li>
+							<li><tt>has_one</tt></li>
+							<li><tt>has_many</tt></li>
+							<li><tt>has_many :through</tt></li>
+							<li><tt>has_one :through</tt></li>
+							<li><tt>has_and_belongs_to_many</tt></li>
+						</ul>
 					</section>
 					<section>
 						<h2>Query Interface</h2>
+						<p>Query your database using:</p>
+						<ul>
+							<li><tt>where</tt></li>
+							<li><tt>select</tt></li>
+							<li><tt>group</tt></li>
+							<li><tt>order</tt></li>
+							<li><tt>limit</tt></li>
+							<li><tt>offset</tt></li>
+							<li><tt>joins</tt></li>
+							<li><tt>includes</tt></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Query Interface</h2>
+						<p>Finding a single item</p>
+						<pre><code class="ruby">Image.find(1)</code></pre>
+						<div class="fragment">
+							<p>Finding multiple items</p>
+							<pre><code class="ruby">Image.find([1, 10])</code></pre>
+							<pre><code class="ruby">Image.where("type = ? AND size > ?", params[:image_type], params[:size])</code></pre>
+							<pre><code class="ruby">Image.all</code></pre>
+						</div>
+						<div class="fragment">
+							<p>Looping through items</p>
+							<pre><code class="ruby">Album.find_each do |album|
+  ...
+end</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Query Interface</h2>
+						<p>Chaining</p>
+						<pre><code class="ruby">images = Image.where("type = ?", params[:image_type]).order('created_at DESC')</code></pre>
+						<div class="fragment">
+							<p>Won't send the query to the database until you use it</p>
+							<pre><code class="ruby">images.each do |image|
+  ...
+end</code></pre>
+
+						</div>
+					</pre>
+					</section>
+					<section>
+						<h2>Persistance</h2>
+						<p>Save your model to the database</p>
+						<pre><code class="ruby">image = Image.new(:url => 'http://imgs.xkcd.com/comics/nintendo_surgeon.png')</code></pre>
+						<p class="fragment">Two main save methods</p>
+						<div class="fragment">
+							<p>save</p>
+							<pre><code class="ruby">image.save</code></pre>
+						</div>
+						<div class="fragment">
+							<p>save!</p>
+							<pre><code class="ruby">image.save!</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Business Logic</h2>
+						<p>Custom actions that can be performed on a model</p>
+						<pre><code class="ruby">class Image < ActiveRecord::Base
+  ...
+
+  def is_large?()
+    return self.width > 1024 || self.height > 1024
+  end
+end</code></pre>
 					</section>
 				</section>
 
@@ -790,6 +887,7 @@ thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thum
 						<a href="http://guides.rubyonrails.org/index.html">Rails Guides</a><br>
 						<a href="http://ruby.railstutorial.org/ruby-on-rails-tutorial-book">Rails Tutorial</a><br>
 						<a href="http://api.rubyonrails.org/">Rails Documentation</a>
+						<a href="http://www.rubyflow.com/">RubyFlow</a>
 					</section>
 				</section>
 			</div>
