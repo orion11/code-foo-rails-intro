@@ -37,18 +37,32 @@
 				</section>
 
 				<section>
+					<h1>Who am I?</h1>
+					<p>Ryan Sullivan</p>
+					<p>Senior Software Engineer</p>
+					<p><a href="mailto:rsullivan@ign.com">rsullivan@ign.com</a></p>
+					<p><a href="http://www.twitter.com/skisulli" target="_blank">@skisulli</a></p>
+				</section>
+
+				<section>
 					<section>
 						<h1>Gems</h1>
 						<h2>The ruby packages</h2>
 						<img src="assets/images/ruby.png">
 					</section>
 					<section>
-						<h2><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></h2>
+						<h2>Finding Gems</h2>
+						<p><a href="http://rubygems.org/" target="_blank">RubyGems.org</a></p>
 						<img src="assets/images/rubygems.png">
 					</section>
 					<section>
+						<h2>Installing Gems</h2>
+						<p>gem command</p>
+						<pre><code class="no-highlight">$ gem install rails</code></pre>
+					</section>
+					<section>
 						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
-						<h2>Ruby Version Manager</h2>
+						<p>Ruby Version Manager</p>
 						<pre>
 							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
 $ rvm current
@@ -58,7 +72,8 @@ $ rvm gemdir
 						</pre>
 					</section>
 					<section>
-						<h2>RVM: Gemsets</h2>
+						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
+						<p>Gemsets</p>
 						<pre>
 							<code class="no-highlight" contenteditable>$ rvm use --install --create 1.9.3@code-foo
 $ rvm current
@@ -69,10 +84,12 @@ $ rvm gemdir
 					</section>
 					<section>
 						<h2>.rvmrc</h2>
+						<p>Define your ruby and gemset per project</p>
 					</section>
 					<section>
 						<h2>Bundler</h2>
-						<p>Gemfile:</p>
+						<p>Gem dependency manager</p>
+						<p>Gemfile</p>
 						<pre>
 							<code class="ruby" contenteditable>source 'https://rubygems.org'
 
@@ -147,12 +164,17 @@ end</code>
 						<h2>Creating a New Rails Project</h2>
 						<ol>
 							<li>
-								Install the Rails Gem<br>
-								<pre><code class="no-highlight" contenteditable>$ gem install rails</code></pre>
+								Install the Rails and Bundler gems<br>
+								<pre><code class="no-highlight" contenteditable>$ gem install rails bundler</code></pre>
 							</li>
 							<li class="fragment">
-								Create a New Rails Project<br>
+								Create a new Rails project<br>
 								<pre><code class="no-highlight" contenteditable>$ rails new code-foo</code></pre>
+							</li>
+							<li class="fragment">
+								Initialize the new project<br>
+								<pre><code class="no-highlight" contenteditable>$ cd code-foo
+$ bundle install</code></pre>
 							</li>
 						</ol>
 					</section>
@@ -187,32 +209,178 @@ end</code>
 
 					<section>
 						<h2>Generating a Resource</h2>
-						<pre><code class="no-highlight" contenteditable>$ rails generate resource article</code></pre>
+						<pre><code class="no-highlight" contenteditable>$ rails generate resource album</code></pre>
 						<ul class="fragment">
-							<li>create_article database migration</li>
-							<li>article model and associated test files</li>
-							<li>articles controller and associated test files</li>
-							<li>articles views directory, but no view files</li>
-							<li>articles helper and associate test files</li>
-							<li>articles assets (JS and CSS)</li>
-							<li>adds 'resources :articles' to your config/routes.rb</li>
+							<li>create_album database migration</li>
+							<li>album model and associated test files</li>
+							<li>albums controller and associated test files</li>
+							<li>albums views directory, but no view files</li>
+							<li>albums helper and associate test files</li>
+							<li>albums assets (JS and CSS)</li>
+							<li>adds 'resources :albums' to your config/routes.rb</li>
 						</ul>
 					</section>
 				</section>
 
 				<section>
 					<section>
+						<h1>Controllers</h1>
+						<p>Receives and responds to HTTP requests</p>
+						<img src="assets/images/mvc_schematic.png">
+					</section>
+					<section>
+						<h2>Routing</h2>
+						<p>If a user goes to '/albums/12' in their browser</p>
+						<div class="fragment">
+							<p>config/routes.rb</p>
+							<pre><code contenteditable>match "/albums/:id" => "albums#show"</code></pre>
+							<p>Calls the show action on the AlbumsController</p>
+						</div>
+					</section>
+					<section>
+						<h2>Application Controller</h2>
+						<p>The controller all other controllers should inherit from</p>
+						<pre><code>class ApplicationController < ActionController::Base
+  def get_user
+    User.find(session[:user_id])
+  end
+end</code></pre>
+						<div class="fragment">
+						<p>albums_controller.rb</p>
+							<pre><code class="ruby">class AlbumsController < ApplicationController
+  def create
+    @album = Album.new(params[:album])
+    @album.user = get_user
+    ...
+  end
+end</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Actions</h2>
+						<p>app/controllers/albums_controller.rb</p>
+						<pre><code>class AlbumsController < ApplicationController
+  def show
+    @album = Album.find(params[:id])
+  end
+end</code></pre>
+						<ul>
+							<li class="fragment">Calls the show action</li>
+							<li class="fragment">The show action finds the album</li>
+							<li class="fragment">Renders the app/views/albums/show.html.erb view</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Params</h2>
+						<p>All url parameters will be in a params hash</p>
+						<div class="fragment">
+							<p>config/routes.rb</p>
+							<pre><code class="ruby" contenteditable>match "/albums/:id" => "albums#show"</code></pre>
+						</div>
+						<div class="fragment">
+							<p>/albums/15?foo=bar</p>
+							<pre class="fragment"><code class="ruby" contenteditable>params = { :id => 15, :foo => 'bar' }</code></pre>
+						</div>
+					</section>
+					<section>
+						<h2>Instance Variables</h2>
+						<p>app/controllers/albums_controller.rb</p>
+						<pre><code>class AlbumsController < ApplicationController
+  def show
+    @album = Album.find(params[:id])
+  end
+end</code></pre>
+						<p class="fragment">
+							@album is an instance variable. You can use it in other method within the same request cycle, or within the view.
+						</p>
+					</section>
+					<section>
+						<h2>Rendering A Response</h2>
+						Defaults to rendering 'app/views/albums/show.html.erb'
+						<ul>
+							<li class="fragment">render nothing<br>
+								<pre><code class="ruby" contenteditable>render :nothing => true</code></pre>
+							</li>
+							<li class="fragment">render another action's view<br>
+								<pre><code class="ruby" contenteditable>render 'edit'</code></pre>
+							</li>
+							<li class="fragment">render another controller and action's view<br>
+								<pre><code class="ruby" contenteditable>render :layout => 'images/edit'</code></pre>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Redirecting</h2>
+						<p>You can redirect to another route in your app by calling 'redirect_to'</p>
+						<pre><code class="ruby" contenteditable>redirect_to albums_path</code></pre>
+					</section>
+					<section>
+						<h2>Responding to specific formats</h2>
+						<p>albums_controller.rb</p>
+						<pre><code class="ruby" contenteditable>class AlbumsController < ApplicationController
+  def index
+    @albums = Album.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml { render :xml => @albums }
+      format.json { render :json => @albums }
+    end
+  end
+end</code></pre>
+					</section>
+					<section>
+						<h2>Filters</h2>
+						<p>Before Filters</p>
+						<pre><code class="ruby" contenteditable>class ApplicationController < ActionController::Base
+  before_filter :require_login
+
+  ...
+
+  private
+
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to new_login_url # halts request cycle
+    end
+  end
+
+  def logged_in?
+    !!current_user
+  end
+end</code></pre>
+					<p class="fragment">Around Filters, After Filters</p>
+					</section>
+					<section>
+						<h2>Filters</h2>
+						<p>Skipping Filters</p>
+							<pre><code class="ruby">class AlbumsController < ApplicationController
+  skip_before_filter :require_login, :only => [:index, :show]
+
+  ...
+end</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
 						<h1>Models</h1>
-						Model your data with ActiveRecord
+						<p>Model your data with ActiveRecord<br><br></p>
+						<ul>
+							<li class="fragment">Interface to your database</li>
+							<li class="fragment">Ties your models together</li>
+							<li class="fragment">Validates user input</li>
+							<li class="fragment">Encapsulates your business logic</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Database Migrations</h2>
 						<p>Creating a migration</p>
-						<pre><code class="no-highlight">$ rails generate model Article</code></pre>
-						<p>Generates: db/migrate/20120712210018_create_articles.rb</p>
-						<pre><code class="ruby">class CreateArticles < ActiveRecord::Migration
+						<pre><code class="no-highlight">$ rails generate model Album</code></pre>
+						<p>Generates: db/migrate/20120712210018_create_albums.rb</p>
+						<pre><code class="ruby">class CreateAlbums < ActiveRecord::Migration
   def change
-    create_table :articles do |t|
+    create_table :albums do |t|
 
       t.timestamps
     end
@@ -222,11 +390,11 @@ end</code></pre>
 					<section>
 						<h2>Database Migrations</h2>
 						<p>Adding columns to your table</p>
-						<pre><code class="ruby">class CreateArticles < ActiveRecord::Migration
+						<pre><code class="ruby">class CreateAlbums < ActiveRecord::Migration
   def change
-    create_table :articles do |t|
-      t.string :headline
-      t.text :body
+    create_table :albums do |t|
+      t.string :title
+      t.text :description
       t.datetime :publish_date
 
       t.timestamps
@@ -237,17 +405,17 @@ end</code></pre>
 					<section>
 						<h2>Database Migrations</h2>
 						<p>Modifying an existing table</p>
-						<pre><code class="no-highlight">$ rails generate migration AddSubHeadlineToArticles</code></pre>
-						<p>Generates: db/migrate/20120712210735_add_sub_headline_to_articles.rb</p>
-						<pre><code class="ruby">class AddSubHeadlineToArticles < ActiveRecord::Migration
+						<pre><code class="no-highlight">$ rails generate migration AddStatusToAlbums</code></pre>
+						<p>Generates: db/migrate/20120712210735_add_status_to_albums.rb</p>
+						<pre><code class="ruby">class AddStatusToAlbums < ActiveRecord::Migration
   def change
   end
 end</code></pre>
 						<div class="fragment">
 							<p>Add the column</p>
-							<pre><code class="ruby">class AddSubHeadlineToArticles < ActiveRecord::Migration
+							<pre><code class="ruby">class AddStatusToAlbums < ActiveRecord::Migration
   def change
-    t.string :sub_headline
+    t.string :status
   end
 end</code></pre>
 						</div>
@@ -277,9 +445,11 @@ rake db:version        # Retrieves the current schema version number</code></pre
 						<h2>Associations</h2>
 						<p>app/models/album.rb</p>
 						<pre><code class="ruby">class Album < ActiveRecord::Base
+  ...
 end</code></pre>
 						<p>app/models/image.rb</p>
 						<pre><code class="ruby">class Image < ActiveRecord::Base
+  ...
 end</code></pre>
 					</section>
 					<section>
@@ -287,10 +457,14 @@ end</code></pre>
 						<p>app/models/album.rb</p>
 						<pre><code class="ruby">class Album < ActiveRecord::Base
   has_many :images
+
+  ...
 end</code></pre>
 						<p>app/models/image.rb</p>
 						<pre><code class="ruby">class Image < ActiveRecord::Base
   belongs_to :album
+
+  ...
 end</code></pre>
 					</section>
 					<section>
@@ -309,14 +483,14 @@ end</code></pre>
 						<h2>Query Interface</h2>
 						<p>Query your database using:</p>
 						<ul>
+							<li><tt>find</tt></li>
+							<li><tt>find_each</tt></li>
 							<li><tt>where</tt></li>
-							<li><tt>select</tt></li>
-							<li><tt>group</tt></li>
+							<li><tt>all</tt></li>
 							<li><tt>order</tt></li>
 							<li><tt>limit</tt></li>
 							<li><tt>offset</tt></li>
 							<li><tt>joins</tt></li>
-							<li><tt>includes</tt></li>
 						</ul>
 					</section>
 					<section>
@@ -366,8 +540,12 @@ end</code></pre>
 					<section>
 						<h2>Validations</h2>
 						<p>Validate model attributes before saving them to the database</p>
-						<pre><code class="ruby">class Article < ActiveRecord::Base
-  validates :headline, :presence => true
+						<pre><code class="ruby">class Album < ActiveRecord::Base
+  ...
+
+  validates :title, :presence => true
+
+  ...
 end</code></pre>
 					</section>
 					<section>
@@ -376,7 +554,7 @@ end</code></pre>
 						<ul>
 							<li>acceptance - boolean must be true</li>
 							<li>confirmation - :key and :key_confirmation must be present and equal</li>
-							<li>incluscion/exclusion - must be in or notin an array of valid values</li>
+							<li>incluscion/exclusion - must be in or not in an array of valid values</li>
 							<li>format - must match a regex</li>
 							<li>length - specify min/max length</li>
 							<li>numericality - must be a number</li>
@@ -389,7 +567,7 @@ end</code></pre>
 						<pre><code class="ruby">class Image < ActiveRecord::Base
   ...
 
-  def is_large?()
+  def is_large?
     return self.width > 1024 || self.height > 1024
   end
 end</code></pre>
@@ -398,154 +576,19 @@ end</code></pre>
 
 				<section>
 					<section>
-						<h1>Controllers</h1>
-						<p>Receives and responds to HTTP requests</p>
-						<img src="assets/images/mvc_schematic.png">
-					</section>
-					<section>
-						<h2>Routing</h2>
-						<p>if a article goes to '/articles/12' in their browser</p>
-						<div class="fragment">
-							<p>config/routes.rb</p>
-							<pre><code contenteditable>match "/articles/:id" => "articles#show"</code></pre>
-						</div>
-					</section>
-					<section>
-						<h2>Actions</h2>
-						<p>app/controllers/articles_controller.rb</p>
-						<pre><code>class ArticlesController < ApplicationController
-  def show
-    @article = Article.find(params[:id])
-  end
-end</code></pre>
-						<ul>
-							<li class="fragment">calls the show action</li>
-							<li class="fragment">the show action finds the article</li>
-							<li class="fragment">renders the app/views/articles/show.html.erb view</li>
-						</ul>
-					</section>
-					<section>
-						<h2>Params</h2>
-						<p>all url parameters will be in a params hash</p>
-						<div class="fragment">
-							<p>config/routes.rb</p>
-							<pre><code contenteditable>match "/articles/:id" => "articles#show"</code></pre>
-						</div>
-						<div class="fragment">
-							<p>/articles/15?foo=bar</p>
-							<pre><code>{ id: 15, foo: 'bar' }</code></pre>
-						</div>
-					</section>
-					<section>
-						<h2>Instance Variables</h2>
-						<p>app/controllers/articles_controller.rb</p>
-						<pre><code>class ArticlesController < ApplicationController
-  def show
-    @article = Article.find(params[:id])
-  end
-end</code></pre>
-						<p class="fragment">
-							@article is an instance variable. You can use it in other method within the same request cycle, or within the view.
-						</p>
-					</section>
-					<section>
-						<h2>Rendering A Response</h2>
-						Defaults to rendering 'app/views/articles/show.html.erb'
-						<ul>
-							<li class="fragment">render nothing<br>
-								<pre><code class="ruby" contenteditable>render nothing: true</code></pre>
-							</li>
-							<li class="fragment">render another action's view<br>
-								<pre><code class="ruby" contenteditable>render 'edit'</code></pre>
-							</li>
-							<li class="fragment">render another controller and action's view<br>
-								<pre><code class="ruby" contenteditable>render layout: 'reviews/edit'</code></pre>
-							</li>
-						</ul>
-					</section>
-					<section>
-						<h2>Redirecting</h2>
-						<p>You can redirect to another route in your app by calling 'redirect_to'</p>
-						<pre><code class="ruby" contenteditable>redirect_to articles_path</code></pre>
-					</section>
-					<section>
-						<h2>Responding to specific formats</h2>
-						<p>articles_controller.rb</p>
-						<pre><code class="ruby" contenteditable>class ArticlesController < ApplicationController
-  def index
-    @articles = Article.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml { render :xml => @articles}
-      format.json { render :json => @articles}
-    end
-  end
-end</code></pre>
-					</section>
-					<section>
-						<h2>Filters</h2>
-						<p>Before Filters</p>
-						<pre><code>class ApplicationController < ActionController::Base
-  before_filter :require_login
-
-  private
-
-  def require_login
-    unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
-      redirect_to new_login_url # halts request cycle
-    end
-  end
-
-  def logged_in?
-    !!current_user
-  end
-end</code></pre>
-					<p class="fragment">Around Filters, After Filters</p>
-					</section>
-					<section>
-						<h2>Filters</h2>
-						<p>Skipping Filters</p>
-							<pre><code class="ruby">class ArticlesController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create]
-end</code></pre>
-					</section>
-					<section>
-						<h2>Application Controller</h2>
-						<p>The controller all other controllers should inherit from</p>
-						<pre><code>class ApplicationController < ActionController::Base
-  def get_user
-    User.find(session[:user_id])
-  end
-end</code></pre>
-						<div class="fragment">
-						<p>articles_controller.rb</p>
-							<pre><code class="ruby">class ArticlesController < ApplicationController
-  def create
-    @article = Article.new(params[:article])
-    @article.user = get_user
-    ...
-  end
-end</code></pre>
-						</div>
-					</section>
-				</section>
-
-				<section>
-					<section>
 						<h1>Views</h1>
-						The HTML, JSON, or XML representation of your data
+						The HTML representation of your data
 					</section>
 					<section>
 						<h2>ERB: Ruby in Your HTML</h2>
 						<p>Controller:</p>
 						<pre><code contenteditable>def index
-  @articles = [ { name: 'foo' }, { name: 'bar' } ]
+  @albums = [ { name: 'foo' }, { name: 'bar' } ]
 end</code></pre>
 						<p>View:</p>
 						<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
-    &lt;li&gt;&lt;%= article.name %&gt;&lt;/li&gt;
+  &lt;% @albums.each do |album| %&gt;
+    &lt;li&gt;&lt;%= album.name %&gt;&lt;/li&gt;
   &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<div class="fragment">
@@ -559,15 +602,24 @@ end</code></pre>
 					<section>
 						<h2>Layouts</h2>
 						<p>Global templates for your views</p>
-						<p>can define the layout for a controller response by doing:</p>
+						<ul>
+							<li>Layouts live in app/views/layouts</li>
+							<li>application.html.erb is the default layout</li>
+							<li>
+								Requires a yield to an unnamed block<br>
+								<pre><code class="ruby erb" contenteditable>&lt%= yield %&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Layouts</h2>
+						<p>Can define the layout for a controller response by doing:</p>
 						<pre><code class="ruby" contenteditable>class PopupController < ApplicationController
 	layout :popup</code></pre>
-						</p>or</p>
+						</p>or for a controller action by doing:</p>
 						<pre><code class="ruby" contenteditable>def index
   ...
   render :layout => 'popup'</code></pre>
-						<p>requires a yield to an unnamed block</p>
-						<pre><code class="ruby erb" contenteditable>&lt%= yield %&gt;</code></pre>
 					</section>
 					<section>
 						<h2>content_for and yield</h2>
@@ -606,58 +658,59 @@ end</code></pre>
 						<p>Break your view up into chunks</p>
 						<p>index.html.erb</p>
 						<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
+  &lt;% @albums.each do |album| %&gt;
     &lt;li&gt;
-      &lt;%= article.name %&gt;&lt;br&gt;
-      &lt;%= article.description %&gt;
+      &lt;%= album.name %&gt;&lt;br&gt;
+      &lt;%= album.description %&gt;
     &lt;/li&gt;
   &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 						<p>show.html.erb</p>
 						<pre><code contenteditable>&lt;div&gt;
-  &lt;%= @article.name %&gt;&lt;br&gt;
-  &lt;%= @article.description %&gt;
+  &lt;%= @album.name %&gt;&lt;br&gt;
+  &lt;%= @album.description %&gt;
 &lt;/div&gt; </code></pre>
 					</section>
 					<section>
-						<p>_article.html.erb</p>
-						<pre><code contenteditable>&lt;%= article.name %&gt;&lt;br&gt;
-&lt;%= article.description %&gt;</code></pre>
+						<h2>Partials</h2>
+						<p>_album.html.erb</p>
+						<pre><code contenteditable>&lt;%= album.name %&gt;&lt;br&gt;
+&lt;%= album.description %&gt;</code></pre>
 						<div class="fragment">
 							<p>index.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;% @articles.each do |article| %&gt;
+  &lt;% @albums.each do |album| %&gt;
     &lt;li&gt;
-      &lt;%= render partial: 'article', object: article %&gt;
+      &lt;%= render partial: 'album', object: album %&gt;
     &lt;/li&gt;
   &lt;% end %&gt;
 &lt;/ul&gt;</code></pre>
 							<p>show.html.erb</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;%= render partial: 'article', object: @article %&gt;
+  &lt;%= render partial: 'album', object: @album %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 						<div class="fragment">
 							<p>or</p>
 							<pre><code contenteditable>&lt;ul&gt;
-  &lt;%= render partial: 'article', locals: { article: @article } %&gt;
+  &lt;%= render partial: 'album', locals: { album: @album } %&gt;
 &lt;/ul&gt;</code></pre>
 						</div>
 					</section>
 					<section>
 						<h2>HAML</h2>
 						<p>index.html.haml</p>
-						<pre><code contenteditable>%ul#article-list.articles
+						<pre><code contenteditable>%ul#album-list.albums
   - @objects.each do |object|
-    %li.article= render partial: 'article', object: object
+    %li.album= render partial: 'album', object: object
 
 .right.column
-  = @article.name</code></pre>
+  = @album.user.name</code></pre>
 						<div class="fragment">
 							<p>Result</p>
-							<pre><code contenteditable>&lt;ul id=&quot;article-list&quot; class=&quot;articles&quot;&gt;
-  &lt;li class=&quot;article&quot;&gt;foo&lt;/li&gt;
-  &lt;li class=&quot;article&quot;&gt;bar&lt;/li&gt;
+							<pre><code contenteditable>&lt;ul id=&quot;album-list&quot; class=&quot;albums&quot;&gt;
+  &lt;li class=&quot;album&quot;&gt;foo&lt;/li&gt;
+  &lt;li class=&quot;album&quot;&gt;bar&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;right column&quot;&gt;
@@ -686,21 +739,23 @@ end</code></pre>
 					</section>
 					<section>
 						<h2>Custom Helper Methods</h2>
-						<p>app/helpers/articles_helper.rb</p>
-						<pre><code class="ruby">module ArticlesHelper
-  def link_to_article(article, *args)
-    url = "http://www.ign.com/images/articles/#{article.metadata.slug}"
+						<p>app/helpers/albums_helper.rb</p>
+						<pre><code class="ruby">module AlbumsHelper
+  def link_to_album(album, *args)
+    url = "http://www.ign.com/images/albums/#{album.metadata.slug}"
     link_to url, url, *args
   end
 end</code></pre>
 						<p>Usage:</p>
-						<pre><code class="erb"><%= link_to_article @article, class: 'article-link' %></code></pre>
+						<pre><code class="erb"><%= link_to_album @album, class: 'album-link' %></code></pre>
 					</section>
 					<section>
 						<h2>Exposing Controller Methods as Helpers</h2>
 						<p>app/controllers/application_controller.rb</p>
 						<pre><code class="ruby">class ApplicationController < ActionController::Base
   helper_method :access?
+
+  ...
 
   def access?
     return !!current_user
@@ -800,13 +855,7 @@ end
 				<section>
 					<section>
 						<h1>Routes</h1>
-						URLs
-					</section>
-					<section>
-						<h2>One-off Routes</h2>
-						<pre><code>match "/articles/:id" => "articles#show"</code></pre>
-						<p>Routes to:</p>
-						<pre><code>GET /articles/17</code></pre>
+						Your application's URLs
 					</section>
 					<section>
 						<h2>rake routes</h2>
@@ -828,6 +877,12 @@ thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thum
 							<p>Routing helpers</p>
 							<pre><code><%= link_to 'All Images', all_albums_path %></code></pre>
 						</div>
+					</section>
+					<section>
+						<h2>One-off Routes</h2>
+						<pre><code>match "/albums/:id" => "albums#show"</code></pre>
+						<p>Routes to:</p>
+						<pre><code>GET /albums/17</code></pre>
 					</section>
 					<section>
 						<h2>RESTful Resources</h2>
