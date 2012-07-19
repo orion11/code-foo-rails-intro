@@ -42,6 +42,7 @@
 					<p>Senior Software Engineer</p>
 					<p><a href="mailto:rsullivan@ign.com">rsullivan@ign.com</a></p>
 					<p><a href="http://www.twitter.com/skisulli" target="_blank">@skisulli</a></p>
+					<p>Slides: <a href="http://talks.sul.li/code-foo-rails-intro">http://talks.sul.li/code-foo-rails-intro</a></p>
 				</section>
 
 				<section>
@@ -60,31 +61,79 @@
 						<p>gem command</p>
 						<pre><code class="no-highlight">$ gem install rails</code></pre>
 					</section>
+				</section>
+
+				<section>
 					<section>
-						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
-						<p>Ruby Version Manager</p>
-						<pre>
-							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
-$ rvm current
-ruby-1.9.3-p194
-$ rvm gemdir
-/Users/ryan/.rvm/gems/ruby-1.9.3-p194</code>
-						</pre>
+						<h1>TDD</h1>
+						<h2>
+							<span class="red">Red</span>
+							<span style="color: green;">Green</span>
+							<span style="color: yellow;">Refactor</span>
+						</h2>
+						<img src="assets/images/traffic.png" height="300">
 					</section>
 					<section>
-						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
-						<p>Gemsets</p>
-						<pre>
-							<code class="no-highlight" contenteditable>$ rvm use --install --create 1.9.3@code-foo
-$ rvm current
-ruby-1.9.3-p194@code-foo
-$ rvm gemdir
-/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</code>
-						</pre>
+						<h2>Write Your Tests First</h2>
+						<ul>
+							<li>Better code</li>
+							<li>More maintainable code</li>
+							<li>Higher confidence</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<img src="assets/images/rails.png">
 					</section>
 					<section>
-						<h2>.rvmrc</h2>
-						<p>Define your ruby and gemset per project</p>
+						<h2>Why Rails?</h2>
+						<ul>
+							<li>Ease of development</li>
+							<li>Well organized</li>
+							<li>Great community</li>
+							<li>Popular</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Why Rails?</h2>
+						<img src="assets/images/popular01.png">
+					</section>
+					<section>
+						<h2>Why Rails?</h2>
+						<img src="assets/images/popular02.png">
+					</section>
+					<section>
+						<h2>Why Not Rails?</h2>
+						<ul>
+							<li>Opinionated framework</li>
+							<li>Slower than compiled languages (Scala, Java, etc)</li>
+						</ul>
+					</section>
+					<section>
+						<h2>MVC Framework</h2>
+						<p>Model | View | Controller</p>
+						<img src="assets/images/mvc_schematic.png">
+					</section>
+					<section>
+						<h2>Creating a New Rails Project</h2>
+						<ol>
+							<li>Install any dependencies (ruby and your database)</li>
+							<li class="fragment">
+								Install the Rails and Bundler gems<br>
+								<pre><code class="no-highlight" contenteditable>$ gem install rails bundler</code></pre>
+							</li>
+							<li class="fragment">
+								Create a new Rails project<br>
+								<pre><code class="no-highlight" contenteditable>$ rails new code-foo</code></pre>
+							</li>
+							<li class="fragment">
+								Initialize the new project<br>
+								<pre><code class="no-highlight" contenteditable>$ cd code-foo
+$ bundle install</code></pre>
+							</li>
+						</ol>
 					</section>
 					<section>
 						<h2>Bundler</h2>
@@ -99,7 +148,7 @@ gem 'rails', '~> 3.2.3'
 # Gems used only for assets, not required in production
 group :assets do
   gem 'jquery-rails', '2.0.1'
-  gem 'sass-rails', '=> 3.2.3'
+  gem 'sass-rails', '>= 3.2.3'
   gem 'therubyracer', '~> 0.10.0'
   gem 'uglifier', '>= 1.0.3'
 end
@@ -116,67 +165,11 @@ end</code>
 						<h2>Bundler</h2>
 						<p>Commands you should know:</p>
 						<ul>
-							<li>bundle install - installs all the gems in your Gemfile or Gemfile.lock</li>
-							<li>bundle update [GEM_NAME] - update the gems, be careful running this as it updates all</li>
+							<li>bundle install</li>
+							<li>bundle update NAME - update the gems, be careful</li>
 							<li>bundle exec COMMAND - executes the command within the context of the bundled gems</li>
-							<li>bundle outdated - new in version 1.1, shows you which gems are out of date, and what the latest version is</li>
+							<li>bundle outdated - new in version 1.1</li>
 						</ul>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h1>TDD</h1>
-						<h2>
-							<span class="red">Red</span>
-							<span style="color: green;">Green</span>
-							<span style="color: yellow;">Refactor</span>
-						</h2>
-						<img src="assets/images/traffic.png" height="300">
-					</section>
-					<section>
-						<h2>RSpec</h2>
-						<pre>
-							<code class="ruby" contenteditable>describe '#foo'
-  it 'returns bar' end
-    hello.should eq('bar')
-  end
-end</code>
-						</pre>
-						<pre class="fragment">
-							<code class="ruby" contenteditable>def foo
-  'bar'
-end</code>
-						</pre>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<img src="assets/images/rails.png">
-					</section>
-					<section>
-						<h2>MVC Framework</h2>
-						<p>Model | View | Controller</p>
-						<img src="assets/images/mvc_schematic.png">
-					</section>
-					<section>
-						<h2>Creating a New Rails Project</h2>
-						<ol>
-							<li>
-								Install the Rails and Bundler gems<br>
-								<pre><code class="no-highlight" contenteditable>$ gem install rails bundler</code></pre>
-							</li>
-							<li class="fragment">
-								Create a new Rails project<br>
-								<pre><code class="no-highlight" contenteditable>$ rails new code-foo</code></pre>
-							</li>
-							<li class="fragment">
-								Initialize the new project<br>
-								<pre><code class="no-highlight" contenteditable>$ cd code-foo
-$ bundle install</code></pre>
-							</li>
-						</ol>
 					</section>
 					<section>
 						<h2>Structure of a Rails Project</h2>
@@ -218,6 +211,22 @@ $ bundle install</code></pre>
 							<li>albums helper and associate test files</li>
 							<li>albums assets (JS and CSS)</li>
 							<li>adds 'resources :albums' to your config/routes.rb</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Environments</h2>
+						<ul>
+							<li class="fragment">Custom configurations for different situations</p>
+							<li class="fragment">
+								Rails comes with 3 environments out of the box
+								<ul>
+									<li>development</li>
+									<li>test</li>
+									<li>production</li>
+								</ul>
+							</li>
+							<li class="fragment">Configurations live in config/environments</li>
 						</ul>
 					</section>
 				</section>
@@ -290,7 +299,7 @@ end</code></pre>
     @album = Album.find(params[:id])
   end
 end</code></pre>
-						<p class="fragment">
+						<p>
 							@album is an instance variable. You can use it in other method within the same request cycle, or within the view.
 						</p>
 					</section>
@@ -340,7 +349,6 @@ end</code></pre>
 
   def require_login
     unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
       redirect_to new_login_url # halts request cycle
     end
   end
@@ -415,7 +423,9 @@ end</code></pre>
 							<p>Add the column</p>
 							<pre><code class="ruby">class AddStatusToAlbums < ActiveRecord::Migration
   def change
-    t.string :status
+    change_table :albums do |t|
+      t.string :status
+    end
   end
 end</code></pre>
 						</div>
@@ -513,10 +523,14 @@ end</code></pre>
 					<section>
 						<h2>Query Interface</h2>
 						<p>Chaining</p>
-						<pre><code class="ruby">images = Image.where("type = ?", params[:image_type]).order('created_at DESC')</code></pre>
+						<pre><code class="ruby">Image.where("type = ?", params[:image_type]).order('created_at DESC')</code></pre>
 						<div class="fragment">
 							<p>Won't send the query to the database until you use it</p>
-							<pre><code class="ruby">images.each do |image|
+							<pre><code class="ruby"># Builds the query but does not execute it
+images = Image.where("type = ?", params[:image_type]).order('created_at DESC')
+
+# Query will happen here
+images.each do |image|
   ...
 end</code></pre>
 
@@ -554,7 +568,7 @@ end</code></pre>
 						<ul>
 							<li>acceptance - boolean must be true</li>
 							<li>confirmation - :key and :key_confirmation must be present and equal</li>
-							<li>incluscion/exclusion - must be in or not in an array of valid values</li>
+							<li>inclusion/exclusion - must be in or not in an array of valid values</li>
 							<li>format - must match a regex</li>
 							<li>length - specify min/max length</li>
 							<li>numericality - must be a number</li>
@@ -925,6 +939,32 @@ thumbnail_update_album PUT    /albums/:id/thumbnail_update(.:format) albums#thum
 						<h1>Rails at IGN</h1>
 						<p>Rails in a Service Oriented World</p>
 						<img src="assets/images/ign.png" width="350">
+					</section>
+					<section>
+						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
+						<p>Ruby Version Manager</p>
+						<pre>
+							<code class="no-highlight" contenteditable>$ rvm use --install 1.9.3
+$ rvm current
+ruby-1.9.3-p194
+$ rvm gemdir
+/Users/ryan/.rvm/gems/ruby-1.9.3-p194</code>
+						</pre>
+					</section>
+					<section>
+						<h2><a href="https://rvm.io/" target="_blank">RVM</a></h2>
+						<p>Gemsets</p>
+						<pre>
+							<code class="no-highlight" contenteditable>$ rvm use --install --create 1.9.3@code-foo
+$ rvm current
+ruby-1.9.3-p194@code-foo
+$ rvm gemdir
+/Users/ryan/.rvm/gems/ruby-1.9.3-p194@code-foo</code>
+						</pre>
+					</section>
+					<section>
+						<h2>.rvmrc</h2>
+						<p>Define your ruby and gemset per project</p>
 					</section>
 					<section>
 						<h2>No ActiveRecord</h2>
